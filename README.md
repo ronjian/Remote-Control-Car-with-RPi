@@ -7,42 +7,7 @@ reference:
 https://diyhacking.com/control-a-dc-motor-with-an-l298-controller-and-raspberry-pi/  
 https://www.youtube.com/watch?v=bNOlimnWZJE&t=8s
 <img src="assets/Raspberry-Pi-L298-Schematic.png" width=800/>  
-```python
-import sys
-import time
-import RPi.GPIO as GPIO
 
-mode=GPIO.getmode()
-
-GPIO.cleanup()
-
-Forward=26
-Backward=20
-sleeptime=1
-
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(Forward, GPIO.OUT)
-GPIO.setup(Backward, GPIO.OUT)
-
-def forward(x):
-    GPIO.output(Forward, GPIO.HIGH)
-    print("Moving Forward")
-    time.sleep(x)
-    GPIO.output(Forward, GPIO.LOW)
-
-def reverse(x):
-    GPIO.output(Backward, GPIO.HIGH)
-    print("Moving Backward")
-    time.sleep(x)
-    GPIO.output(Backward, GPIO.LOW)
-
-while (1):
-    
-    forward(5)
-
-    reverse(5)
-GPIO.cleanup()
-```
 <h2 id='HC-SR04'>HC-SR04 Ultrasonic Rangefinder</h2>
 reference:  
 https://www.youtube.com/watch?v=sXJjfEisjpo  
