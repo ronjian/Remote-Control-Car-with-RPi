@@ -5,7 +5,9 @@
 <h2 id='l298n'>L298N + RPI diagram</h2>
 reference:  
 https://diyhacking.com/control-a-dc-motor-with-an-l298-controller-and-raspberry-pi/  
-https://www.youtube.com/watch?v=bNOlimnWZJE&t=8s
+https://www.youtube.com/watch?v=bNOlimnWZJE&t=8s   
+http://www.piddlerintheroot.com/l298n-dual-h-bridge/  
+http://www.explainingcomputers.com/rasp_pi_robotics.html  
 <img src="assets/Raspberry-Pi-L298-Schematic.png" width=800/>  
 
 <h2 id='HC-SR04'>HC-SR04 Ultrasonic Rangefinder</h2>
