@@ -8,6 +8,7 @@ https://diyhacking.com/control-a-dc-motor-with-an-l298-controller-and-raspberry-
 https://www.youtube.com/watch?v=bNOlimnWZJE&t=8s   
 http://www.piddlerintheroot.com/l298n-dual-h-bridge/  
 http://www.explainingcomputers.com/rasp_pi_robotics.html  
+https://docs.python.org/2/library/curses.html#constants  
 <img src="assets/Raspberry-Pi-L298-Schematic.png" width=800/>  
 
 <h2 id='HC-SR04'>HC-SR04 Ultrasonic Rangefinder</h2>
