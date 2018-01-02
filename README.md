@@ -3,9 +3,10 @@
 <img src="assets/GPIO2.png" width=600/>  
 
 <h2 id='l298n'>Control motors by L298N</h2>
+
 * Basic usage of L298N to control motors forward and backward:
-    * http://www.piddlerintheroot.com/l298n-dual-h-bridge/
-    * http://www.explainingcomputers.com/rasp_pi_robotics.html  
+  * http://www.piddlerintheroot.com/l298n-dual-h-bridge/
+  * http://www.explainingcomputers.com/rasp_pi_robotics.html  
 * Advanced usage of L298N to control the speed of motors:  
     * https://diyhacking.com/control-a-dc-motor-with-an-l298-controller-and-raspberry-pi/   
 * Programming to use keyborad to control the motors:
