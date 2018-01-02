@@ -5,20 +5,16 @@
 <h2 id='l298n'>Control motors by L298N</h2>
 
 * Basic usage of L298N to control motors forward and backward:
-  * http://www.piddlerintheroot.com/l298n-dual-h-bridge/
-  * http://www.explainingcomputers.com/rasp_pi_robotics.html  
+    * http://www.piddlerintheroot.com/l298n-dual-h-bridge/
+    * http://www.explainingcomputers.com/rasp_pi_robotics.html  
 * Advanced usage of L298N to control the speed of motors:  
     * https://diyhacking.com/control-a-dc-motor-with-an-l298-controller-and-raspberry-pi/   
 * Programming to use keyborad to control the motors:
     * Python curses package: https://docs.python.org/2/library/curses.html#constants  
-    * Python pygame package: https://www.pygame.org/docs/  
-    * Install pygame on Mac: https://gist.github.com/connorshea/f539c91f210e72077ca9  
-    https://github.com/pygame/pygame/issues/359  
-        * ```pip install pygame```  
-        * ```pythonw -m pygame.examples.aliens```
 * I use sublime to sync codes on my laptop with PI
     * https://www.youtube.com/watch?v=g6NqBGHFfm0
-* [code sample](codes/control.py) to control RC car by keyboard.
+* [Steps](StreamRPIcamera.md) to stream PI camera video to laptop browser.
+* [code sample](codes/basic_control.py) to control basic RC car (without speed control) by keyboard.
 
 <h2 id='HC-SR04'>HC-SR04 Ultrasonic Rangefinder</h2>
 reference:  
