@@ -3,14 +3,28 @@ import threading
 import time
 import curses
 import RPi.GPIO as gpio
+import argparse
+
 
 def monitor_key():
-	global char, thl
+	"""
+	Because package "curses" can't detect key release action.
+	So make this function to monitor the key action by inquirying 
+	the key action infinitely with a delay time, think key is released.
+	This function will be kick off in another thread from the main process, 
+	working as a daemon thread.
+	"""
+	global char, thl  # share key and thread lock with main process
+	#initialize curses components
 	screen = curses.initscr()
 	curses.noecho() 
 	curses.cbreak()
 	screen.keypad(True)
-	screen.timeout(300)#0.3 second waiting, if timeout, screen.getch() will return -1. 
+	# define the delay time in millionseconds.
+	# If timeout, screen.getch() will return -1. 
+	# -1 will be treated as STOP command.
+	# So the RC car will have ~0.3s latency.
+	screen.timeout(FLAGS.delay)  
 	try:
 			while True:  
 				tmp = screen.getch()
@@ -18,92 +32,125 @@ def monitor_key():
 				char = tmp
 				thl.release()
 	finally:
-		#Close down curses properly, inc turn echo back on!
+		# Close curses components properly, inc turn echo back on!
 		curses.nocbreak()
 		screen.keypad(0)
 		curses.echo()
 		curses.endwin()
 
+
 def init():
-    """initial GPIO pin in BCM("Broadcom SOC channel") mode"""
-    gpio.setmode(gpio.BCM)
-    gpio.setup(17, gpio.OUT)
-    gpio.setup(22, gpio.OUT)
-    gpio.setup(23, gpio.OUT)
-    gpio.setup(24, gpio.OUT)
-    
+	"""
+	Initialize GPIO pin in BCM("Broadcom SOC channel") mode
+	"""
+	gpio.setmode(gpio.BCM)
+	gpio.setup(17, gpio.OUT)
+	gpio.setup(22, gpio.OUT)
+	gpio.setup(23, gpio.OUT)
+	gpio.setup(24, gpio.OUT)
+	
 def stop():
-    """stop car"""
-    gpio.output(17, False)
-    gpio.output(22, False)
-    gpio.output(23, False) 
-    gpio.output(24, False)
+	"""stop car"""
+	gpio.output(17, False)
+	gpio.output(22, False)
+	gpio.output(23, False) 
+	gpio.output(24, False)
 
 def right(forward=True):
-    """control right side wheels"""
-    gpio.output(17, forward)
-    gpio.output(22, not forward)
+	"""
+	Control right side wheels
+
+	Args:
+	- forward: control the right side wheels cycle to move the car forward,
+		if "False", right side wheels will cycle to move the car backward.
+	"""
+	gpio.output(17, forward)
+	gpio.output(22, not forward)
 
 def left(forward=True):
-    """control left side wheels"""
-    gpio.output(23, forward) 
-    gpio.output(24, not forward)
+	"""
+	Control left side wheels
+
+	Args:
+	- forward: control the left side wheels cycle to move the car forward,
+		if "False", left side wheels will cycle to move the car backward.
+	"""
+	gpio.output(23, forward) 
+	gpio.output(24, not forward)
 
 
 def forward(forward=True):
-    """
-    - forward=True: both side wheels forward
-    - forward=False: both side wheels backward
-    """
-    left(forward=forward)
-    right(forward=forward)
+	"""
+	Control both side wheels to cycle in the same direction.
+
+	Args:
+	- forward: default as "True" to control both side wheels to cycle 
+		to move the car forward.
+		if False: both side wheels will cycle to move the car backward.
+	"""
+	left(forward=forward)
+	right(forward=forward)
 
 def left_cycle(forward=True):
-    """
-    - forward=True: turning left
-    - forward=False: turning right
-    """
-    left(forward=forward)
-    right(forward=not forward)
+	"""
+	Control two sides wheels to cycle in opposite direction
+	 to make the car cycling.
+
+	Args:
+	- forward: If "True", the car will cycle in left. 
+		If "False", the car will cycle in right.
+	"""
+	left(forward=forward)
+	right(forward=not forward)
 
 
-
+#main
 if __name__ == '__main__':
-    #init GPIO
-	init()
-    #start a thread to monitor keyboard action
-    char = -1
+	#read arguments
+	parser = argparse.ArgumentParser(description="Remote control PRI car.")
+	parser.add_argument(
+		'--delay', 
+		type=int,
+		default=200,
+		help="Give the expecting delay time for the RC car, it's in millionseconds and at least 200 millionseconds."
+		)
+	FLAGS, unparsed = parser.parse_known_args()
+
+	init()  #init GPIO
+	char = -1
 	prev_cmd = -1
-	thl = threading.Lock()
-	threading.Thread(target = monitor_key, args = ()).start()
-    #detect keyboard input to control RC car
+	thl = threading.Lock()	
+	#start a thread to monitor keyboard action	
+	threading.Thread(target = monitor_key, args = ()).start()  
+	#detect keyboard input to control RC car
 	try:
 		while True:  
-            thl.acquire()
+			thl.acquire()
 			cmd = char
-            thl.release()
+			thl.release()
 			if cmd != prev_cmd:
 				if cmd == ord('q'):
+					print("QUIT")
 					break
 				elif cmd == curses.KEY_UP:
-					print("forward")
+					print("FORWARD")
 					forward(forward=True)
 				elif cmd == curses.KEY_DOWN:
-					print("reverse")
+					print("BACKWARD")
 					forward(forward=False)
 				elif cmd == curses.KEY_RIGHT:
-					print("right_cycle")
+					print("CYCLY RIGHT")
 					left_cycle(forward=False)
 				elif cmd == curses.KEY_LEFT:
-					print("left_cycle")
+					print("CYCLE LEFT")
 					left_cycle(forward=True)
 				elif cmd == -1:
-					print("stop")
+					print("STOP")
 					stop()   
 
-                prev_cmd = cmd
+				prev_cmd = cmd
 
-			time.sleep(0.4)
+			time.sleep(FLAGS.delay / 1000.0 * 1.5 )
 
 	finally:
 		# clean GPIO
