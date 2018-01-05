@@ -2,7 +2,7 @@
 import threading
 import time
 import curses
-import RPi.GPIO as gpio
+import RPi.GPIO as GPIO
 import argparse
 
 
@@ -43,18 +43,19 @@ def init():
 	"""
 	Initialize GPIO pin in BCM("Broadcom SOC channel") mode
 	"""
-	gpio.setmode(gpio.BCM)
-	gpio.setup(17, gpio.OUT)
-	gpio.setup(22, gpio.OUT)
-	gpio.setup(23, gpio.OUT)
-	gpio.setup(24, gpio.OUT)
+	GPIO.setwarnings(False)
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setup(17, GPIO.OUT)
+	GPIO.setup(22, GPIO.OUT)
+	GPIO.setup(23, GPIO.OUT)
+	GPIO.setup(24, GPIO.OUT)
 	
 def stop():
 	"""stop car"""
-	gpio.output(17, False)
-	gpio.output(22, False)
-	gpio.output(23, False) 
-	gpio.output(24, False)
+	GPIO.output(17, False)
+	GPIO.output(22, False)
+	GPIO.output(23, False) 
+	GPIO.output(24, False)
 
 def right(forward=True):
 	"""
@@ -64,8 +65,8 @@ def right(forward=True):
 	- forward: control the right side wheels cycle to move the car forward,
 		if "False", right side wheels will cycle to move the car backward.
 	"""
-	gpio.output(17, forward)
-	gpio.output(22, not forward)
+	GPIO.output(17, forward)
+	GPIO.output(22, not forward)
 
 def left(forward=True):
 	"""
@@ -75,8 +76,8 @@ def left(forward=True):
 	- forward: control the left side wheels cycle to move the car forward,
 		if "False", left side wheels will cycle to move the car backward.
 	"""
-	gpio.output(23, forward) 
-	gpio.output(24, not forward)
+	GPIO.output(23, forward) 
+	GPIO.output(24, not forward)
 
 
 def forward(forward=True):
@@ -146,7 +147,7 @@ if __name__ == '__main__':
 					left_cycle(forward=True)
 				elif cmd == -1:
 					print("STOP")
-					stop()   
+					#stop()   
 
 				prev_cmd = cmd
 
@@ -155,7 +156,7 @@ if __name__ == '__main__':
 	finally:
 		# clean GPIO
 		stop()
-		gpio.cleanup()
+		GPIO.cleanup()
 
 
 
