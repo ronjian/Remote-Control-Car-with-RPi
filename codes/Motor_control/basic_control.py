@@ -112,7 +112,7 @@ if __name__ == '__main__':
 	parser.add_argument(
 		'--delay', 
 		type=int,
-		default=200,
+		default=250,
 		help="Give the expecting delay time for the RC car, it's in millionseconds and at least 200 millionseconds."
 		)
 	FLAGS, unparsed = parser.parse_known_args()
@@ -147,7 +147,7 @@ if __name__ == '__main__':
 					left_cycle(forward=True)
 				elif cmd == -1:
 					print("STOP")
-					#stop()   
+					stop()   
 
 				prev_cmd = cmd
 

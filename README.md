@@ -45,7 +45,7 @@ Demo
 
 <h2 id="servo">Servo</h2>
 
-* tutorial: https://www.youtube.com/watch?v=ddlDgUymbxc
+* tutorial: https://www.youtube.com/watch?v=N5QmZ92uvUo  
 
 <h2 id='HC-SR04'>HC-SR04 Ultrasonic Rangefinder</h2>
 
@@ -53,7 +53,20 @@ reference:
 https://www.youtube.com/watch?v=sXJjfEisjpo  
 https://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi  
 https://raspberrytips.nl/hc-sr04-ultrasone-sensor/  
-<img src="assets/hc-sr04-tut-2.png" width=500/> 
+https://gist.github.com/raspberrytipsnl/85cb7807340bede2279b12f950aef5cb  
+
+<p align="center">
+Circuit diagram  
+<img src="assets/hc-sr04-tut-2.png" width=500/>
+Implementation  
+<img src="assets/HC-SR04-diagram1.JPG" width=500 rotate="90"/>  
+<img src="assets/HC-SR04-diagram2.JPG" width=500 />  
+<img src="assets/HC-SR04-diagram3.JPG" width=500/>  
+Demo  
+<img src="assets/HC-SR04-diagram-demo.png" width=500/>  
+</p>
+
+ 
 
 <h2 id='KY-037'>KY-037</h2>
 

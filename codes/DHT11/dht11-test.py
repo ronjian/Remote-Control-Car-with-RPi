@@ -10,7 +10,7 @@ import dht11
 import RPi.GPIO as GPIO
 
 #define GPIO 14 as DHT11 data pin
-Temp_sensor=21
+Temp_sensor=20
 def main():
   # Main program block
   GPIO.setwarnings(False)
