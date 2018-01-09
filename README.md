@@ -1,7 +1,9 @@
 <h2 id='gpio'>RPI3 GPIO Pin Mappings</h2>
 
+<p align="center">
 <img src="assets/GPIO.png" width=600/><br>
 <img src="assets/GPIO2.png" width=600/><br>
+</p>
 
 <h2 id='l298n'>Control motors by L298N</h2>
 
@@ -25,9 +27,9 @@ for PWM programming on RPi. [GPIO document](https://sourceforge.net/p/raspberry-
 Example code and tutorial:  
 http://osoyoo.com/2017/03/21/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%AF%BB%E5%8F%96dht11/  
 <p align="center">
-Diagram
+Diagram<br>
 <img src="assets/dht11.png" width=300/><br>
-Demo
+Demo<br>
 <img src="assets/DHT11_demo.png" width=400/><br>
 </p>
 
@@ -39,7 +41,7 @@ Example code and tutorial:
 
 <p align="center">
 <img src="assets/TCRT5000.jpeg" width=300/><br>
-Demo
+Demo<br>
 <img src="assets/TCRT5000_demo2.png" width=500/><br>
 </p>
 
@@ -58,17 +60,15 @@ reference:
 * https://gist.github.com/raspberrytipsnl/85cb7807340bede2279b12f950aef5cb  
 
 <p align="center">
-Circuit diagram  
+Circuit diagram<br>
 <img src="assets/hc-sr04-tut-2.png" width=500/>
-Implementation  
+Implementation<br>
 <img src="assets/HC-SR04-diagram1.JPG" width=500/><br>
 <img src="assets/HC-SR04-diagram2.JPG" width=500 /><br>  
 <img src="assets/HC-SR04-diagram3.JPG" width=500/><br>  
-Demo  
+Demo<br>
 <img src="assets/HC-SR04-diagram-demo.png" width=500/><br>  
 </p>
-
- 
 
 <h2 id='KY-037'>KY-037</h2>
 
