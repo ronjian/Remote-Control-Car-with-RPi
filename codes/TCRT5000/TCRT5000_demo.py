@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-TrackingPin = 21
+TrackingPin = 25
 
 def setup():
  GPIO.setmode(GPIO.BCM)

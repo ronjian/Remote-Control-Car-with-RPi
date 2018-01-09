@@ -61,7 +61,7 @@ reference:
 
 <p align="center">
 Circuit diagram<br>
-<img src="assets/hc-sr04-tut-2.png" width=500/>
+<img src="assets/hc-sr04-tut-2.png" width=500/><br>
 Implementation<br>
 <img src="assets/HC-SR04-diagram1.JPG" width=500/><br>
 <img src="assets/HC-SR04-diagram2.JPG" width=500 /><br>  

@@ -15,7 +15,7 @@ GPIO.setmode(GPIO.BCM)
 # which is the same as GPIO17 (Broadcom / BCM reference).
 # We need our pin to use the GPIO digital output function, so we just
 # tell it to designate this pin for OUTPUT.
-pin_number = 18
+pin_number = 19
 GPIO.setup(pin_number, GPIO.OUT)
 
 # Now we can use PWM on pin 11.  It's software PWM, so don't expect perfect
@@ -47,7 +47,7 @@ positionList = [left_position, middle_position, right_position, middle_position]
 ms_per_cycle = 1000 / frequency_hertz
 
 # Iterate through the positions sequence 3 times.
-for i in range(3):
+for i in range(5):
 	# This sequence contains positions from left to right
 	# and then back again.  Move the motor to each position in order.
 	for position in positionList:
