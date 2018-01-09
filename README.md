@@ -1,7 +1,7 @@
 <h2 id='gpio'>RPI3 GPIO Pin Mappings</h2>
 
-<img src="assets/GPIO.png" width=600/>  
-<img src="assets/GPIO2.png" width=600/>  
+<img src="assets/GPIO.png" width=600/><br>
+<img src="assets/GPIO2.png" width=600/><br>
 
 <h2 id='l298n'>Control motors by L298N</h2>
 
@@ -26,44 +26,46 @@ Example code and tutorial:
 http://osoyoo.com/2017/03/21/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%AF%BB%E5%8F%96dht11/  
 <p align="center">
 Diagram
-<img src="assets/dht11.png" width=300/> 
+<img src="assets/dht11.png" width=300/><br>
 Demo
-<img src="assets/DHT11_demo.png" width=400/>
+<img src="assets/DHT11_demo.png" width=400/><br>
 </p>
 
 <h2 id='TCRT5000'>TCRT5000</h2>
 
 Example code and tutorial:  
-https://raspberrytips.nl/tcrt5000/  
-https://github.com/the-raspberry-pi-guy/robot  
+* https://raspberrytips.nl/tcrt5000/  
+* https://github.com/the-raspberry-pi-guy/robot  
 
 <p align="center">
-<img src="assets/TCRT5000.jpeg" width=300/> 
+<img src="assets/TCRT5000.jpeg" width=300/><br>
 Demo
-<img src="assets/TCRT5000_demo2.png" width=500/>
+<img src="assets/TCRT5000_demo2.png" width=500/><br>
 </p>
 
 <h2 id="servo">Servo</h2>
 
-* tutorial: https://www.youtube.com/watch?v=N5QmZ92uvUo  
+* tutorial:  
+    * Servo control: https://www.youtube.com/watch?v=N5QmZ92uvUo  
+    * Servo platform installation: http://v.youku.com/v_show/id_XODk3NDE1NjYw.html  
 
 <h2 id='HC-SR04'>HC-SR04 Ultrasonic Rangefinder</h2>
 
 reference:  
-https://www.youtube.com/watch?v=sXJjfEisjpo  
-https://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi  
-https://raspberrytips.nl/hc-sr04-ultrasone-sensor/  
-https://gist.github.com/raspberrytipsnl/85cb7807340bede2279b12f950aef5cb  
+* https://www.youtube.com/watch?v=sXJjfEisjpo  
+* https://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi  
+* https://raspberrytips.nl/hc-sr04-ultrasone-sensor/  
+* https://gist.github.com/raspberrytipsnl/85cb7807340bede2279b12f950aef5cb  
 
 <p align="center">
 Circuit diagram  
 <img src="assets/hc-sr04-tut-2.png" width=500/>
 Implementation  
-<img src="assets/HC-SR04-diagram1.JPG" width=500 rotate="90"/>  
-<img src="assets/HC-SR04-diagram2.JPG" width=500 />  
-<img src="assets/HC-SR04-diagram3.JPG" width=500/>  
+<img src="assets/HC-SR04-diagram1.JPG" width=500/><br>
+<img src="assets/HC-SR04-diagram2.JPG" width=500 /><br>  
+<img src="assets/HC-SR04-diagram3.JPG" width=500/><br>  
 Demo  
-<img src="assets/HC-SR04-diagram-demo.png" width=500/>  
+<img src="assets/HC-SR04-diagram-demo.png" width=500/><br>  
 </p>
 
  
@@ -72,7 +74,7 @@ Demo
 
 reference:  
 http://sensorkit.en.joy-it.net/index.php?title=KY-037_Microphone_sensor_module_(high_sensitivity)  
-<img src="assets/KY-037.png" width=200/> 
+<img src="assets/KY-037.png" width=200/><br>
 
 <h2 id='FC-04'>FC-04</h2>
 
