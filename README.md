@@ -9,11 +9,40 @@
 
 * Basic usage of L298N to control motors forward and backward:
     * http://www.piddlerintheroot.com/l298n-dual-h-bridge/
-    * http://www.explainingcomputers.com/rasp_pi_robotics.html  
-* Advanced usage of L298N to control the speed of motors:  
-    * https://diyhacking.com/control-a-dc-motor-with-an-l298-controller-and-raspberry-pi/   
+    * http://www.explainingcomputers.com/rasp_pi_robotics.html    
 * Programming to use keyborad to control the motors:
     * Python curses package: https://docs.python.org/2/library/curses.html#constants  
+    
+There is two ways to control the motor speed. One is PWM changing on the INPUT pin as the below code snippet.
+The other is using the enable PIN to change PWM, as [this code](https://github.com/custom-build-robots/Motor-Driver-L298N-H-Bridge/blob/master/L298NHBridge.py)
+implemented. There is a [post](https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=90243) comparing these two solutions.  
+And someone 
+```python
+#!/usr/bin/env python3
+"""infinitely loop the motor to speed up and down"""
+import time
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+p = GPIO.PWM(23, 50) 
+p.start(0)
+GPIO.output(24, False)
+try:
+    while 1:
+    	# low to high
+        for dc in range(0, 101, 5):
+            p.ChangeDutyCycle(dc)
+            time.sleep(0.2)
+        # high to low
+        for dc in range(100, -1, -5):
+            p.ChangeDutyCycle(dc)
+            time.sleep(0.2)
+except KeyboardInterrupt:
+    pass
+p.stop()
+GPIO.cleanup()
+```
 * I use sublime to sync codes on my laptop with PI
     * https://www.youtube.com/watch?v=g6NqBGHFfm0
 * [Steps](StreamRPIcamera.md) to stream PI camera video to laptop browser.

@@ -1,22 +1,24 @@
-#!/usr/bin/env python3
+"""An example to brighten/dim an LED"""
 import time
 import RPi.GPIO as GPIO
+
+PIN = 06
+
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(23, GPIO.OUT)
-GPIO.setup(24, GPIO.OUT)
-p = GPIO.PWM(23, 50) 
+GPIO.setup(PIN, GPIO.OUT)
+
+p = GPIO.PWM(PIN, 50)  # channel=12 frequency=50Hz
 p.start(0)
-GPIO.output(24, False)
 try:
     while 1:
-    	# low to high
+    	# dim to bright
         for dc in range(0, 101, 5):
             p.ChangeDutyCycle(dc)
-            time.sleep(0.2)
-        # high to low
+            time.sleep(0.1)
+        # bright to dim
         for dc in range(100, -1, -5):
             p.ChangeDutyCycle(dc)
-            time.sleep(0.2)
+            time.sleep(0.1)
 except KeyboardInterrupt:
     pass
 p.stop()

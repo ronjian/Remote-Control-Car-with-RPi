@@ -1,20 +1,8 @@
-# This gives us control of the Raspberry Pi's pins.
 import RPi.GPIO as GPIO
-
-# This is only used for time delays... standard Python stuff.
 import time
 
-# Tell i which pin number we'll  be using to refer to the GPIO pains.
-# We will use the physical pin ordering.
 GPIO.setmode(GPIO.BCM)
 
-# We will tell the Broadcom CPU which pins do what.
-# There are many pins and most have up to 5 different functions,
-# each with a default.  Check the pinout to find non-specialized
-# "GPIO" pins.  We'll use P!-Pin_11 (using BOARD reference),
-# which is the same as GPIO17 (Broadcom / BCM reference).
-# We need our pin to use the GPIO digital output function, so we just
-# tell it to designate this pin for OUTPUT.
 pin_number = 18
 GPIO.setup(pin_number, GPIO.OUT)
 
@@ -35,13 +23,13 @@ pwm = GPIO.PWM(pin_number, frequency_hertz)
 # insruct the motor to forcefully hold its position.
 left_position = 0.40
 right_position = 2.5
-middle_position = (right_position - left_position) / 2 + left_position
+middle_position = (right_position + left_position) / 2 
 
 # I'll store a sequence of positions for use in a loop later on.
 positionList = [left_position, middle_position, right_position, middle_position]
 
 # total number of milliseconds in a a cycle.  Given this, we will then 
-# know both how long we want to pulse in this cycle and how long tghe 
+# know both how long we want to pulse in this cycle and how long the 
 # cycle itself is.  That is all we need to calculate a duty cycle as 
 # a percentage.
 ms_per_cycle = 1000 / frequency_hertz
@@ -56,7 +44,7 @@ for i in range(5):
 		print("Duty Cycle: " + str(duty_cycle_percentage))
 		print("")
 		pwm.start(duty_cycle_percentage)
-		time.sleep(.5)
+		time.sleep(1)
 	
 
 # Done.  Terminate all signals and relax the motor.
