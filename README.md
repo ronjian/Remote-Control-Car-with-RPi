@@ -99,6 +99,11 @@ Demo<br>
 <img src="assets/HC-SR04-diagram-demo.png" width=500/><br>  
 </p>
 
+<h2 id='Flask_Web_Server'>Flask Web Server</h2>
+
+* https://randomnerdtutorials.com/raspberry-pi-web-server-using-flask-to-control-gpios/  
+* http://mattrichardson.com/Raspberry-Pi-Flask/
+
 <h2 id='KY-037'>KY-037</h2>
 
 reference:  
