@@ -8,8 +8,9 @@ if __name__ == '__main__':
 	try:
 		while True:
 			GPIO.output(TrackingPin, GPIO.LOW)
-			time.sleep(0.3)
+			time.sleep(0.2)
 			GPIO.output(TrackingPin, GPIO.HIGH)
-			time.sleep(1)
+			time.sleep(10)
 	except KeyboardInterrupt:
-	 GPIO.cleanup()
+		print("\nBye!\n")
+		GPIO.cleanup()

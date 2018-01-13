@@ -79,6 +79,7 @@ Demo<br>
 * tutorial:  
     * Servo control: https://www.youtube.com/watch?v=N5QmZ92uvUo  
     * Servo platform installation: http://v.youku.com/v_show/id_XODk3NDE1NjYw.html  
+    * 
 
 <h2 id='HC-SR04'>HC-SR04 Ultrasonic Rangefinder</h2>
 
@@ -87,6 +88,7 @@ reference:
 * https://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi  
 * https://raspberrytips.nl/hc-sr04-ultrasone-sensor/  
 * https://gist.github.com/raspberrytipsnl/85cb7807340bede2279b12f950aef5cb  
+* https://stackoverflow.com/questions/45488233/controlling-continuous-servo-using-python-in-raspberry-pi-but-the-continuous-ser
 
 <p align="center">
 Circuit diagram<br>
@@ -103,6 +105,8 @@ Demo<br>
 
 * https://randomnerdtutorials.com/raspberry-pi-web-server-using-flask-to-control-gpios/  
 * http://mattrichardson.com/Raspberry-Pi-Flask/
+* http://nessy.info/?p=1136
+* http://vladikk.com/2013/09/12/serving-flask-with-nginx-on-ubuntu/  
 
 <h2 id='KY-037'>KY-037</h2>
 

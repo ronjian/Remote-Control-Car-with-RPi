@@ -1,0 +1,338 @@
+<html>
+ 
+<head>
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ 
+<style>
+  img {
+      margin-top: 25px;
+      margin-bottom: 25px;
+    }
+</style>
+ 
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+ 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ 
+ 
+<script>
+ 
+ 
+// define our fired states to false
+var forward_fired = false;
+var backward_fired = false;
+var turn_left_fired = false;
+var turn_right_fired = false;
+var up_fired = false;
+var down_fired = false;
+var left_fired = false;
+var right_fired = false;
+var reset_fired = false;
+var speed_pct = 100;
+
+// set speed
+function set_speed() {
+  speed_pct = document.getElementById("speed_pct").value;
+  console.log(speed_pct);
+}
+
+
+// keydown event
+document.onkeydown  = function() {
+ 
+    if(event.keyCode == 38) {
+ 
+        if(!forward_fired && !backward_fired) {
+            forward_fired = true;
+ 
+            button = document.getElementById('forward');
+            button.className = 'btn btn-success btn-lg active';
+ 
+            console.log('start forward');
+            console.log("/forward?speed_pct="+speed_pct)
+            $.get("/forward?speed_pct="+speed_pct)
+        }
+    }
+ 
+    if(event.keyCode == 40) {
+        if(!backward_fired && !forward_fired) {
+            backward_fired = true;
+ 
+            button = document.getElementById('backward');
+            button.className = 'btn btn-success btn-lg active';
+ 
+            console.log('start backward');
+            $.get("/backward?speed_pct="+speed_pct)
+        }
+    }
+ 
+    if(event.keyCode == 37) {
+        if(!turn_left_fired && !turn_right_fired && !backward_fired) {
+            turn_left_fired = true;
+ 
+            button = document.getElementById('turn left');
+            button.className = 'btn btn-success btn-lg active';
+ 
+            console.log('start left');
+            $.get("/turn_left?speed_pct="+speed_pct)
+        }
+    }
+ 
+    if(event.keyCode == 39) {
+        if(!turn_right_fired && !turn_left_fired && !backward_fired) {
+            turn_right_fired = true;
+ 
+            button = document.getElementById('turn right');
+            button.className = 'btn btn-success btn-lg active';
+ 
+            console.log('start right');
+            $.get("/turn_right?speed_pct="+speed_pct)
+        }
+    }
+    //w
+    if(event.keyCode == 87) {
+        if(!up_fired) {
+            up_fired = true;
+            button = document.getElementById('up');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('camera up');
+            
+        }
+        $.get("/camera_up")
+    }
+    //s
+    if(event.keyCode == 83) {
+          if(!down_fired){
+            down_fired = true;
+            button = document.getElementById('down');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('camera down');
+            
+          }
+          $.get("/camera_down")
+    }
+    //a
+    if(event.keyCode == 65) {
+        if(!left_fired) {
+            left_fired = true;
+            button = document.getElementById('left');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('camera left');
+            
+        }
+        $.get("/camera_left")
+    }
+    //d
+    if(event.keyCode == 68) {
+          if(!right_fired){
+            right_fired = true;
+            button = document.getElementById('right');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('camera right');
+            
+          }
+          $.get("/camera_right")
+    }
+    //f
+    if(event.keyCode == 70) {
+          if(!reset_fired){
+            reset_fired = true;
+            button = document.getElementById('reset');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('camera reset');
+            $.get("/camera_reset")
+          }
+          
+    }
+
+};
+ 
+// keyup event
+document.onkeyup = function() {
+ 
+    if(event.keyCode == 38) {
+      if(forward_fired) {
+        forward_fired = false;
+ 
+        button = document.getElementById('forward');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop forward');
+        $.get("/stop")
+      }
+    }
+ 
+    if(event.keyCode == 40) {
+      if(backward_fired) {
+        backward_fired = false;
+ 
+        button = document.getElementById('backward');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop backward');
+        $.get("/stop")
+      }
+    }
+ 
+    if(event.keyCode == 37) {
+      if(turn_left_fired) {
+        turn_left_fired = false;
+ 
+        button = document.getElementById('turn left');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop left');
+        $.get("/stop")
+      }
+    }
+ 
+    if(event.keyCode == 39) {
+      if(turn_right_fired) {
+        turn_right_fired = false;
+ 
+        button = document.getElementById('turn right');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop right');
+        $.get("/stop")
+      }
+    }
+
+    //w
+    if(event.keyCode == 87) {
+      if(up_fired) {
+        up_fired = false;
+ 
+        button = document.getElementById('up');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop camera up');
+      }
+    }
+    //s
+    if(event.keyCode == 83) {
+      if(down_fired) {
+        down_fired = false;
+ 
+        button = document.getElementById('down');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop camera down');
+      }
+    }
+    //a
+    if(event.keyCode == 65) {
+      if(left_fired) {
+        left_fired = false;
+ 
+        button = document.getElementById('left');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop camera left');
+      }
+    }
+    //d
+    if(event.keyCode == 68) {
+      if(right_fired) {
+        right_fired = false;
+ 
+        button = document.getElementById('right');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop camera right');
+      }
+    }
+    //f
+    if(event.keyCode == 70) {
+      if(reset_fired) {
+        reset_fired = false;
+ 
+        button = document.getElementById('reset');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('camera already reset');
+      }
+    }
+ 
+};
+ 
+</script>
+ 
+</head>
+ 
+</body>
+
+<div class="container">
+  <div class="row">
+    <center>
+ 
+      <img src="/stream" class="img-thumbnail">
+ 
+    </center>
+  </div>
+</div>
+
+
+<!-- control buttons -->
+<div class="container">
+  <div class="row">
+
+
+    <center>
+      <p>Motor control with arrow key</p><br>
+
+      <div class="input-group mb-3">
+        <input id="speed_pct" type="text" class="form-control" placeholder="Motor speed percentage, range in 0~100, default 100" aria-label="Speed percentage" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" onclick="set_speed()">Set</button>
+        </div>
+      </div>
+
+      <button id="turn left" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      </button>
+ 
+      <button id="forward" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+      </button>
+ 
+      <button id="backward" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+      </button>
+ 
+      <button id="turn right" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      </button>
+      <br><br><br>
+      <p>Camera servo control with key a-s-w-d, f to reset</p>
+      <button id="up" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+      </button>
+ 
+      <button id="left" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      </button>
+ 
+      <button id="down" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+      </button>
+ 
+      <button id="right" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      </button>
+
+      <button id="reset" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+      </button>
+    </center>
+ 
+  </div>
+</div>
+ 
+</body>
+ 
+</html>

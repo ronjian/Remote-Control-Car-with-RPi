@@ -15,7 +15,7 @@ GPIO.setmode(GPIO.BCM)
 
 # Create a dictionary called pins to store the pin number, name, and pin state:
 pins = {
-   6 : {'name' : 'GPIO 06', 'state' : GPIO.LOW},
+   6 : {'name' : 'GPIO 06', 'state' : GPIO.HIGH},
    }
 
 # Set each pin as an output and make it low:
@@ -40,21 +40,21 @@ def main():
 def action(changePin, action):
    # Convert the pin from the URL into an integer:
    changePin = int(changePin)
-   # Get the device name for the pin being changed:
    deviceName = pins[changePin]['name']
-   # If the action part of the URL is "on," execute the code indented below:
    if action == "on":
       # Set the pin high:
       GPIO.output(changePin, GPIO.LOW)
       # Save the status message to be passed into the template:
       message = "Turned " + deviceName + " on."
+      pins[pin]['state'] = True
    if action == "off":
       GPIO.output(changePin, GPIO.HIGH)
       message = "Turned " + deviceName + " off."
+      pins[pin]['state'] = False
 
-   # For each pin, read the pin state and store it in the pins dictionary:
-   for pin in pins:
-      pins[pin]['state'] = not GPIO.input(pin)
+   # # For each pin, read the pin state and store it in the pins dictionary:
+   # for pin in pins:
+   #    pins[pin]['state'] = not GPIO.input(pin)
 
    # Along with the pin dictionary, put the message into the template data dictionary:
    templateData = {
