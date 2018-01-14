@@ -33,6 +33,9 @@ var left_fired = false;
 var right_fired = false;
 var reset_fired = false;
 var speed_pct = 100;
+var back_uc_left_fired = false;
+var back_uc_right_fired = false;
+var back_uc_reset_fired = false;
 
 // set speed
 function set_speed() {
@@ -149,6 +152,39 @@ document.onkeydown  = function() {
           
     }
 
+    //z
+    if(event.keyCode == 90) {
+        if(!back_uc_left_fired) {
+            back_uc_left_fired = true;
+            button = document.getElementById('back_uc_left');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('back ultrasound left');
+            
+        }
+        $.get("/back_uc_left")
+    }
+    //c
+    if(event.keyCode == 67) {
+          if(!back_uc_right_fired){
+            back_uc_right_fired = true;
+            button = document.getElementById('back_uc_right');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('back ultrasound right');
+          }
+          $.get("/back_uc_right")
+    }
+    //x
+    if(event.keyCode == 88) {
+          if(!back_uc_reset_fired){
+            back_uc_reset_fired = true;
+            button = document.getElementById('back_uc_reset');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('back ultrasound reset');
+            $.get("/back_uc_reset")
+          }
+          
+    }
+
 };
  
 // keyup event
@@ -257,6 +293,40 @@ document.onkeyup = function() {
         console.log('camera already reset');
       }
     }
+
+    //z
+    if(event.keyCode == 90) {
+      if(back_uc_left_fired) {
+        back_uc_left_fired = false;
+ 
+        button = document.getElementById('back_uc_left');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop back ultrasound left');
+      }
+    }
+    //c
+    if(event.keyCode == 67) {
+      if(back_uc_right_fired) {
+        back_uc_right_fired = false;
+ 
+        button = document.getElementById('back_uc_right');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop back ultrasound right');
+      }
+    }
+    //x
+    if(event.keyCode == 88) {
+      if(back_uc_reset_fired) {
+        back_uc_reset_fired = false;
+ 
+        button = document.getElementById('back_uc_reset');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop back ultrasound reset');
+      }
+    }
  
 };
  
@@ -270,7 +340,7 @@ document.onkeyup = function() {
   <div class="row">
     <center>
  
-      <img src="/stream" class="img-thumbnail">
+      <img src="/stream" class="img-rounded">
  
     </center>
   </div>
@@ -308,15 +378,13 @@ document.onkeyup = function() {
         <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
       </button>
       <br><br><br>
-      <p>Camera servo control with key a-s-w-d, f to reset</p>
-      <button id="up" type="button" class="btn btn-default btn-lg active">
-        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-      </button>
- 
+      <p>Camera servo control with key a,s,w,d, f to reset</p>
       <button id="left" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
       </button>
- 
+      <button id="up" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+      </button>
       <button id="down" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
       </button>
@@ -327,6 +395,17 @@ document.onkeyup = function() {
 
       <button id="reset" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+      </button>
+      <br><br><br>
+      <p>Back ultrasound servo control with key z,c, x to reset</p>
+      <button id="back_uc_left" type="button" class="btn btn-default btn-lg active">
+        <span class=" glyphicon glyphicon-backward" aria-hidden="true"></span>
+      </button>
+      <button id="back_uc_reset" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+      </button>
+      <button id="back_uc_right" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
       </button>
     </center>
  
