@@ -36,6 +36,8 @@ var speed_pct = 100;
 var back_uc_left_fired = false;
 var back_uc_right_fired = false;
 var back_uc_reset_fired = false;
+var back_distance_fired = false;
+var take_photo_fired = false;
 
 // set speed
 function set_speed() {
@@ -151,6 +153,17 @@ document.onkeydown  = function() {
           }
           
     }
+    //g
+    if(event.keyCode == 71) {
+          if(!take_photo_fired){
+            take_photo_fired = true;
+            button = document.getElementById('take_photo');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('take photo');
+            $.get("/take_photo")
+          }
+          
+    }
 
     //z
     if(event.keyCode == 90) {
@@ -183,6 +196,16 @@ document.onkeydown  = function() {
             $.get("/back_uc_reset")
           }
           
+    }
+    //v
+    if(event.keyCode == 86) {
+          if(!back_distance_fired){
+            back_distance_fired = true;
+            button = document.getElementById('back_distance');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('back ultrasonic detection');
+            $.get("/back_distance")
+          }
     }
 
 };
@@ -293,6 +316,17 @@ document.onkeyup = function() {
         console.log('camera already reset');
       }
     }
+    //g
+    if(event.keyCode == 71) {
+      if(take_photo_fired) {
+        take_photo_fired = false;
+ 
+        button = document.getElementById('take_photo');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('photo took');
+      }
+    }
 
     //z
     if(event.keyCode == 90) {
@@ -325,6 +359,15 @@ document.onkeyup = function() {
         button.className = 'btn btn-default btn-lg active';
  
         console.log('stop back ultrasound reset');
+      }
+    }
+    //v
+    if(event.keyCode == 86) {
+      if(back_distance_fired) {
+        back_distance_fired = false;
+        button = document.getElementById('back_distance');
+        button.className = 'btn btn-default btn-lg active';
+        console.log('stop back ultrasonic detection');
       }
     }
  
@@ -378,7 +421,7 @@ document.onkeyup = function() {
         <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
       </button>
       <br><br><br>
-      <p>Camera servo control with key a,s,w,d, f to reset</p>
+      <p>Camera servo control with key a,s,w,d, f to reset, g to take photo</p>
       <button id="left" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
       </button>
@@ -396,8 +439,11 @@ document.onkeyup = function() {
       <button id="reset" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
       </button>
+      <button id="take_photo" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+      </button>
       <br><br><br>
-      <p>Back ultrasound servo control with key z,c, x to reset</p>
+      <p>Back ultrasonic servo control with key z,c, x to reset, v to detect</p>
       <button id="back_uc_left" type="button" class="btn btn-default btn-lg active">
         <span class=" glyphicon glyphicon-backward" aria-hidden="true"></span>
       </button>
@@ -406,6 +452,9 @@ document.onkeyup = function() {
       </button>
       <button id="back_uc_right" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+      </button>
+      <button id="back_distance" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
       </button>
     </center>
  

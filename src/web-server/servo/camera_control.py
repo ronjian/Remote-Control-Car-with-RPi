@@ -26,7 +26,6 @@ class CONTROL:
 
 	def horizontal_move(self,direction=1.0):
 	    dutycycle = self.previous_hor_dc + direction * self.RANGE * self.STRIDE
-	    print(dutycycle)
 	    if dutycycle > self.MAX_DC: 
 	    	dutycycle = self.MAX_DC
 	    elif dutycycle < self.MIN_DC:
@@ -36,7 +35,6 @@ class CONTROL:
 
 	def vertical_move(self,direction=1.0):
 	    dutycycle = self.previous_ver_dc + direction * self.RANGE * self.STRIDE
-	    print(dutycycle)
 	    if dutycycle > self.MAX_DC: 
 	    	dutycycle = self.MAX_DC
 	    elif dutycycle < self.MIN_DC:
