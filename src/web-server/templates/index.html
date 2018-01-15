@@ -37,6 +37,14 @@ var back_uc_left_fired = false;
 var back_uc_right_fired = false;
 var back_uc_reset_fired = false;
 var back_distance_fired = false;
+var left_uc_left_fired = false;
+var left_uc_right_fired = false;
+var left_uc_reset_fired = false;
+var left_distance_fired = false;
+var right_uc_left_fired = false;
+var right_uc_right_fired = false;
+var right_uc_reset_fired = false;
+var right_distance_fired = false;
 var take_photo_fired = false;
 
 // set speed
@@ -207,6 +215,90 @@ document.onkeydown  = function() {
             $.get("/back_distance")
           }
     }
+    //j
+    if(event.keyCode == 74) {
+        if(!left_uc_left_fired) {
+            left_uc_left_fired = true;
+            button = document.getElementById('left_uc_left');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('left ultrasound left');
+            
+        }
+        $.get("/left_uc_left")
+    }
+    //l
+    if(event.keyCode == 76) {
+          if(!left_uc_right_fired){
+            left_uc_right_fired = true;
+            button = document.getElementById('left_uc_right');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('left ultrasound right');
+          }
+          $.get("/left_uc_right")
+    }
+    //k
+    if(event.keyCode == 75) {
+          if(!left_uc_reset_fired){
+            left_uc_reset_fired = true;
+            button = document.getElementById('left_uc_reset');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('left ultrasound reset');
+            $.get("/left_uc_reset")
+          }
+          
+    }
+    //h
+    if(event.keyCode == 72) {
+          if(!left_distance_fired){
+            left_distance_fired = true;
+            button = document.getElementById('left_distance');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('left ultrasonic detection');
+            $.get("/left_distance")
+          }
+    }
+    //u
+    if(event.keyCode == 85) {
+        if(!right_uc_left_fired) {
+            right_uc_left_fired = true;
+            button = document.getElementById('right_uc_left');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('right ultrasound left');
+            
+        }
+        $.get("/right_uc_left")
+    }
+    //o
+    if(event.keyCode == 79) {
+          if(!right_uc_right_fired){
+            right_uc_right_fired = true;
+            button = document.getElementById('right_uc_right');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('right ultrasound right');
+          }
+          $.get("/right_uc_right")
+    }
+    //i
+    if(event.keyCode == 73) {
+          if(!right_uc_reset_fired){
+            right_uc_reset_fired = true;
+            button = document.getElementById('right_uc_reset');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('right ultrasound reset');
+            $.get("/right_uc_reset")
+          }
+          
+    }
+    //y
+    if(event.keyCode == 89) {
+          if(!right_distance_fired){
+            right_distance_fired = true;
+            button = document.getElementById('right_distance');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('right ultrasonic detection');
+            $.get("/right_distance")
+          }
+    }
 
 };
  
@@ -371,6 +463,92 @@ document.onkeyup = function() {
       }
     }
  
+     //j
+    if(event.keyCode == 74) {
+      if(left_uc_left_fired) {
+        left_uc_left_fired = false;
+ 
+        button = document.getElementById('left_uc_left');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop left ultrasound left');
+      }
+    }
+    //l
+    if(event.keyCode == 76) {
+      if(left_uc_right_fired) {
+        left_uc_right_fired = false;
+ 
+        button = document.getElementById('left_uc_right');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop left ultrasound right');
+      }
+    }
+    //k
+    if(event.keyCode == 75) {
+      if(left_uc_reset_fired) {
+        left_uc_reset_fired = false;
+ 
+        button = document.getElementById('left_uc_reset');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop left ultrasound reset');
+      }
+    }
+    //h
+    if(event.keyCode == 72) {
+      if(left_distance_fired) {
+        left_distance_fired = false;
+        button = document.getElementById('left_distance');
+        button.className = 'btn btn-default btn-lg active';
+        console.log('stop left ultrasonic detection');
+      }
+    }
+    //u
+    if(event.keyCode == 85) {
+      if(right_uc_left_fired) {
+        right_uc_left_fired = false;
+ 
+        button = document.getElementById('right_uc_left');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop right ultrasound left');
+      }
+    }
+    //o
+    if(event.keyCode == 79) {
+      if(right_uc_right_fired) {
+        right_uc_right_fired = false;
+ 
+        button = document.getElementById('right_uc_right');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop right ultrasound right');
+      }
+    }
+    //i
+    if(event.keyCode == 73) {
+      if(right_uc_reset_fired) {
+        right_uc_reset_fired = false;
+ 
+        button = document.getElementById('right_uc_reset');
+        button.className = 'btn btn-default btn-lg active';
+ 
+        console.log('stop right ultrasound reset');
+      }
+    }
+    //y
+    if(event.keyCode == 89) {
+      if(right_distance_fired) {
+        right_distance_fired = false;
+        button = document.getElementById('right_distance');
+        button.className = 'btn btn-default btn-lg active';
+        console.log('stop right ultrasonic detection');
+      }
+    }
+ 
+
 };
  
 </script>
@@ -454,6 +632,32 @@ document.onkeyup = function() {
         <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
       </button>
       <button id="back_distance" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+      </button>
+      <p>Left ultrasonic servo control with key j,l,k to reset, h to detect</p>
+      <button id="left_uc_left" type="button" class="btn btn-default btn-lg active">
+        <span class=" glyphicon glyphicon-backward" aria-hidden="true"></span>
+      </button>
+      <button id="left_uc_reset" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+      </button>
+      <button id="left_uc_right" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+      </button>
+      <button id="left_distance" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+      </button>
+      <p>Right ultrasonic servo control with key u,o, i to reset, y to detect</p>
+      <button id="right_uc_left" type="button" class="btn btn-default btn-lg active">
+        <span class=" glyphicon glyphicon-backward" aria-hidden="true"></span>
+      </button>
+      <button id="right_uc_reset" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+      </button>
+      <button id="right_uc_right" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+      </button>
+      <button id="right_distance" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
       </button>
     </center>

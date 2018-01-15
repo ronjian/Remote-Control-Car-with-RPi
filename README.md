@@ -16,7 +16,6 @@
 There is two ways to control the motor speed. One is PWM changing on the INPUT pin as the below code snippet.
 The other is using the enable PIN to change PWM, as [this code](https://github.com/custom-build-robots/Motor-Driver-L298N-H-Bridge/blob/master/L298NHBridge.py)
 implemented. There is a [post](https://www.raspberrypi.org/forums/viewtopic.php?f=37&t=90243) comparing these two solutions.  
-And someone 
 ```python
 #!/usr/bin/env python3
 """infinitely loop the motor to speed up and down"""
@@ -112,12 +111,17 @@ Munually start web server:
 ```shell
 # launch mjpg streamer
 cd ~/mjpg-streamer/mjpg-streamer/mjpg-streamer-experimental/
-nohup ./mjpg_streamer -o "output_http.so -w ./www" -i "input_raspicam.so -x 640 -y 480 -fps 20 -ex night -rot 180" &
+nohup ./mjpg_streamer -o "output_http.so -w ./www" -i "input_raspicam.so -x 640 -y 480 -fps 20 -ex night -rot 0" &
 # launch nginx
 sudo /etc/init.d/nginx restart
 # launch main control server
 python3 ~/RC_car/src/web-server/server.py
-```
+```  
+
+<h2 id="NRF24L01">NRF24L01</h2>
+
+* http://thezanshow.com/electronics-tutorials/raspberry-pi/tutorial-32-33  
+* https://github.com/BLavery/lib_nrf24  
 
 <h2 id='KY-037'>KY-037</h2>
 
@@ -134,3 +138,8 @@ http://www.instructables.com/id/Using-a-sound-sensor-with-a-Raspberry-Pi-to-cont
 
 reference:  
 https://www.youtube.com/watch?v=GiXNUYPrQ7I  
+
+<h2 id='heart_rate'>Heart Rate module</h2>
+
+* MCP3008 is required
+* https://pulsesensor.com/

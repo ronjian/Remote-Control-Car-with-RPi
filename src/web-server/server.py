@@ -91,11 +91,55 @@ def back_distance():
     print("Back distance is %f cm" % back_ud.detect())
     return "OK"
 
+@app.route("/left_uc_left")
+def left_uc_left():
+    left_uc.horizontal_move(direction = 1.0)
+    return "OK"
+ 
+@app.route("/left_uc_right")
+def left_uc_right():
+    left_uc.horizontal_move(direction = -1.0)
+    return "OK"
+
+@app.route("/left_uc_reset")
+def left_uc_reset():
+    left_uc.reset()
+    return "OK"
+
+@app.route("/left_distance")
+def left_distance():
+    print("Left distance is %f cm" % left_ud.detect())
+    return "OK"
+
+@app.route("/right_uc_left")
+def right_uc_left():
+    right_uc.horizontal_move(direction = 1.0)
+    return "OK"
+ 
+@app.route("/right_uc_right")
+def right_uc_right():
+    right_uc.horizontal_move(direction = -1.0)
+    return "OK"
+
+@app.route("/right_uc_reset")
+def right_uc_reset():
+    right_uc.reset()
+    return "OK"
+
+@app.route("/right_distance")
+def right_distance():
+    print("Right distance is %f cm" % right_ud.detect())
+    return "OK"
+
 if __name__ == "__main__":
     mc = motor_control.CONTROL(Frequency=300)
     cc = camera_control.CONTROL(STRIDE= 0.1)
     back_uc = ultrasonic_control.CONTROL(STRIDE= 0.1, PIN=18)
     back_ud = ultrasonic_distance.UltrasonicSensor(TRIG = 16, ECHO = 12)
+    left_uc = ultrasonic_control.CONTROL(STRIDE= 0.1, PIN=4)
+    right_uc = ultrasonic_control.CONTROL(STRIDE= 0.1, PIN=27)
+    left_ud = ultrasonic_distance.UltrasonicSensor(TRIG = 25, ECHO = 20)
+    right_ud = ultrasonic_distance.UltrasonicSensor(TRIG = 5, ECHO = 21)
     #camera = capture.Camera()
 
     app.run(host='0.0.0.0', port=2000, debug=False)

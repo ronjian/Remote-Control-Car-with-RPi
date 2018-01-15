@@ -4,8 +4,8 @@ import time
 class UltrasonicSensor:
 	def __init__(self, TRIG = 16, ECHO = 12):
 		GPIO.setmode(GPIO.BCM)
-		self.TRIG = 16 
-		self.ECHO = 12
+		self.TRIG = TRIG 
+		self.ECHO = ECHO
 		GPIO.setup(self.TRIG, GPIO.OUT)
 		GPIO.setup(self.ECHO, GPIO.IN)
 		GPIO.output(self.TRIG, False)
