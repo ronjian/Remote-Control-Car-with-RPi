@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time   
 
 class CONTROL:
-	def __init__(self, STRIDE= 0.01, NOMINAL=7.5, RANGE=3.5, PIN=18):
+	def __init__(self, STRIDE= 0.01, NOMINAL=7.5, RANGE=4.5, PIN=18):
 		self.STRIDE= STRIDE 
 		self.NOMINAL= NOMINAL 
 		self.RANGE = RANGE  
@@ -26,7 +26,11 @@ class CONTROL:
 	    	dutycycle = self.MIN_DC
 	    self.horizontal.ChangeDutyCycle(dutycycle)  
 	    self.previous_hor_dc = dutycycle
+	    return dutycycle
 
 	def reset(self):
 		self.horizontal.ChangeDutyCycle(self.NOMINAL)  
 		self.previous_hor_dc = self.NOMINAL
+
+	def horizontal_pos(self,dutycycle):
+		self.horizontal.ChangeDutyCycle(dutycycle)  

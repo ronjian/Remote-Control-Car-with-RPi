@@ -1,10 +1,11 @@
 from flask import Flask, render_template
+from flask import request
 from motor import motor_control 
 from servo import camera_control
 from servo import ultrasonic_control
 from HC_SR04 import ultrasonic_distance
 from camera import capture
-from flask import request
+
 
 app = Flask(__name__)
 

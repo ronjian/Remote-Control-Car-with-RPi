@@ -1,9 +1,12 @@
 <h2 id='gpio'>RPI3 GPIO Pin Mappings</h2>
 
+https://pinout.xyz/
+
 <p align="center">
 <img src="assets/GPIO.png" width=600/><br>
 <img src="assets/GPIO2.png" width=600/><br>
 </p>
+
 
 <h2 id='l298n'>Control motors by L298N</h2>
 
@@ -122,6 +125,7 @@ python3 ~/RC_car/src/web-server/server.py
 
 * http://thezanshow.com/electronics-tutorials/raspberry-pi/tutorial-32-33  
 * https://github.com/BLavery/lib_nrf24  
+* SPI and I2C tutorial: https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial
 
 <h2 id='KY-037'>KY-037</h2>
 
