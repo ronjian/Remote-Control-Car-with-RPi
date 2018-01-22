@@ -114,7 +114,7 @@ Munually start web server:
 ```shell
 # launch mjpg streamer
 cd ~/mjpg-streamer/mjpg-streamer/mjpg-streamer-experimental/
-nohup ./mjpg_streamer -o "output_http.so -w ./www" -i "input_raspicam.so -x 640 -y 480 -fps 20 -ex night -rot 0" &
+nohup ./mjpg_streamer -o "output_http.so -w ./www" -i "input_raspicam.so -x 640 -y 480 -fps 20 -ex night -rot 180" &
 # launch nginx
 sudo /etc/init.d/nginx restart
 # launch main control server

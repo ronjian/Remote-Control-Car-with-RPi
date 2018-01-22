@@ -36,7 +36,7 @@ class UltrasonicSensor:
 			pulse_duration = pulse_end - pulse_start
 			distance = pulse_duration * 17150
 			distance = round(distance, 2)
-		except e:
-			print(e)
+		except Exception:
 			distance = 0.0
-		return distance
+		finally:
+			return distance

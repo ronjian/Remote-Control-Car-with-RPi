@@ -3,6 +3,8 @@ from servo import ultrasonic_control
 from HC_SR04 import ultrasonic_distance
 from MH_FMD import alert
 from time import sleep
+from time import time
+import io
 
 class Obstacle_avoidance:
 	def __init__(self):
@@ -69,11 +71,15 @@ class Obstacle_avoidance:
 		self.uc_to(uc, ref_pos)
 		return min_dis , ref_pos
 
+
+
 if __name__ == "__main__":
 	core = Obstacle_avoidance()
 	LEFT_FRONT_DC, LEFT_SIDE_DC =   5.5, 11.0 #core.tune_servo(core.left_uc)
 	RIGHT_FRONT_DC, RIGHT_SIDE_DC =   10.0, 4.5 #core.tune_servo(core.right_uc)
-	threshold=15
+	side_threshold=15 # cm
+	front_threshold=20 # cm
+	action_list = [] # structure: [(timestamp, action)]
 	try:
 		forward=False
 		turn_flag="left"
@@ -86,8 +92,9 @@ if __name__ == "__main__":
 				print("right min distance is %f cm , at %f dc position" % (right_danger, right_ref_pos))
 				front_danger = core.avg_distance(core.front_ud)
 				print("front danger is %f cm " % front_danger)
-				if right_danger > threshold and left_danger > threshold and front_danger>threshold:
+				if right_danger > side_threshold and left_danger > side_threshold and front_danger>front_threshold:
 					print("Go!")
+					action_list.append((time(), "forward"))
 					core.mc.forward(30)
 					forward=True
 				else:
@@ -98,11 +105,13 @@ if __name__ == "__main__":
 
 					if turn_flag == "left":
 						print("turn left")
+						action_list.append((time(), "left"))
 						core.mc.left(60)
 						sleep(0.2)
 						core.mc.stop()
 					else:
 						print("turn right")
+						action_list.append((time(), "right"))
 						core.mc.right(60)
 						sleep(0.2)
 						core.mc.stop()
@@ -111,53 +120,16 @@ if __name__ == "__main__":
 				left_danger = core.avg_distance(core.left_ud)
 				right_danger = core.avg_distance(core.right_ud)
 				front_danger = core.avg_distance(core.front_ud)
-				if left_danger < threshold or right_danger < threshold or front_danger < threshold:
+				if left_danger < side_threshold or right_danger < side_threshold or front_danger < front_threshold:
 						print("Stop!")
+						action_list.append((time(), "stop"))
 						core.mc.stop()
 						forward=False
-
-
-
-			# core.uc_to(core.left_uc, LEFT_FRONT_DC)
-			# core.uc_to(core.right_uc, RIGHT_FRONT_DC)
-			# sleep(0.2)
-			# front_distance = min(core.avg_distance(core.left_ud), core.avg_distance(core.right_ud))
-			# print("front distance is %f cm" % front_distance)
-			# if front_distance > 50 and forward == False:
-			# 	print("Go!")
-			# 	core.mc.forward(25)
-			# 	forward=True
-			# if front_distance <= 50 and forward == True:
-			# 	print("Stop!")
-			# 	core.mc.stop()
-			# 	forward=False
-			# elif front_distance <= 50:
-			# 	if turn_flag == "left":
-			# 		core.uc_to(core.left_uc, LEFT_SIDE_DC)
-			# 		sleep(0.2)
-			# 		left_distance=core.avg_distance(core.left_ud)
-			# 		print("left distance is %f cm" % left_distance)
-			# 		if left_distance > 25:
-			# 			print("turn left")
-			# 			core.mc.left(60)
-			# 			sleep(0.2)
-			# 			core.mc.stop()
-			# 		else :
-			# 			turn_flag = "right"
-			# 	else:
-			# 		core.uc_to(core.right_uc, RIGHT_SIDE_DC)
-			# 		sleep(0.2)
-			# 		right_distance=core.avg_distance(core.right_ud)
-			# 		print("right distance is %f cm" % right_distance)
-			# 		if right_distance > 25:
-			# 			print("turn right")
-			# 			core.mc.right(60)
-			# 			sleep(0.2)
-			# 			core.mc.stop()
-			# 			print("turn right echo")
-			# 		else:
-			# 			turn_flag = "left"
 	except KeyboardInterrupt:
-		pass
+		print("cancelled")
 	finally:
-		"bye!"
+		#write action list into file:
+		with io.open(file='action_list.txt', mode='w', encoding='utf-8') as f:
+			for x in action_list:
+				f.write(str(x)+"\n")
+		print("bye!")

@@ -4,7 +4,6 @@ from motor import motor_control
 from servo import camera_control
 from servo import ultrasonic_control
 from HC_SR04 import ultrasonic_distance
-from camera import capture
 
 
 app = Flask(__name__)
@@ -141,6 +140,5 @@ if __name__ == "__main__":
     right_uc = ultrasonic_control.CONTROL(STRIDE= 0.1, PIN=27)
     left_ud = ultrasonic_distance.UltrasonicSensor(TRIG = 25, ECHO = 20)
     right_ud = ultrasonic_distance.UltrasonicSensor(TRIG = 5, ECHO = 21)
-    #camera = capture.Camera()
 
     app.run(host='0.0.0.0', port=2000, debug=False)
