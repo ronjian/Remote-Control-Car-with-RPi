@@ -5,7 +5,7 @@ from time import sleep
 
 def __uc_to( uc, pos):
 	uc.direct_move(pos)
-	sleep(0.1)
+	sleep(0.25)
 
 def __avg_distance(  ud):
 	record = []
@@ -40,7 +40,6 @@ def __tune_servo( uc):
 def __uc_scan( uc, ud, front, side):
 	# from front to side
 	min_dis = 400 # start at max limitation
-	ref_pos = 0.0
 	step = (side - front) / 10.0
 	pos = front
 	while (front <= pos and pos <= side ) or (front >= pos and pos >= side ):
@@ -73,8 +72,10 @@ def start():
 
 	LEFT_FRONT_DC, LEFT_SIDE_DC =   5.5, 11.0 # tune_servo(left_uc)
 	RIGHT_FRONT_DC, RIGHT_SIDE_DC =   10.0, 4.5 # tune_servo(right_uc)
-	side_threshold=15 # cm
-	front_threshold=20 # cm
+	side_threshold=20 # cm
+	front_threshold=30 # cm
+	turn_threshold = 6 # cm
+	speed = 60
 	try:
 		forward=False
 		turn_flag="left"
@@ -82,30 +83,30 @@ def start():
 			# seek path
 			if forward==False:
 				left_danger, left_ref_pos = __uc_scan(left_uc, left_ud, LEFT_FRONT_DC, LEFT_SIDE_DC)
-				print("left min distance is %f cm , at %f dc position" % (left_danger, left_ref_pos) )
+				print("left min distance is %f cm" % left_danger )
 				right_danger, right_ref_pos = __uc_scan(right_uc, right_ud, RIGHT_FRONT_DC, RIGHT_SIDE_DC)
-				print("right min distance is %f cm , at %f dc position" % (right_danger, right_ref_pos))
+				print("right min distance is %f cm" % right_danger)
 				front_danger = __avg_distance(front_ud)
 				print("front danger is %f cm " % front_danger)
 				if right_danger > side_threshold and left_danger > side_threshold and front_danger>front_threshold:
 					print("Go!")
-					mc.forward(40)
+					mc.forward(speed)
 					forward=True
 				else:
-					if left_danger < 5 and turn_flag == "left" :
+					if left_danger < turn_threshold and turn_flag == "left" :
 						turn_flag = "right"
-					elif right_danger < 5 and turn_flag == "right" :
+					elif right_danger < turn_threshold and turn_flag == "right" :
 						turn_flag = "left"
 
 					if turn_flag == "left":
 						print("turn left")
-						mc.left(60)
-						sleep(0.2)
+						mc.left(speed)
+						sleep(0.3)
 						mc.stop()
 					else:
 						print("turn right")
-						mc.right(60)
-						sleep(0.2)
+						mc.right(speed)
+						sleep(0.3)
 						mc.stop()
 			# monitor danger
 			else:
@@ -116,6 +117,7 @@ def start():
 						print("Stop!")
 						mc.stop()
 						forward=False
+				sleep(0.01)
 	except KeyboardInterrupt:
 		print("Interrupting")
 	finally:

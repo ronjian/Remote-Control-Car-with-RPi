@@ -11,9 +11,6 @@ class CONTROL:
 	Be careful to set the range to protest your servo.
 	"""
 	def __init__(self, PIN, STRIDE= 0.01, NOMINAL=7.5, RANGE=3.9):
-		self.start(PIN, STRIDE= STRIDE, NOMINAL=NOMINAL, RANGE=RANGE)
-
-	def start(self, PIN, STRIDE, NOMINAL, RANGE):
 		self.STRIDE= STRIDE # step magnitude
 		self.NOMINAL= NOMINAL  # initial digital cycle/angle
 		self.RANGE = RANGE  # range limitation
@@ -21,7 +18,9 @@ class CONTROL:
 		self.MAX_DC = self.NOMINAL +  self.RANGE # high limit
 		self.MIN_DC = self.NOMINAL -  self.RANGE # low limit
 		self.PIN = PIN
+		self.start()
 
+	def start(self):
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setup(self.PIN, GPIO.OUT, initial=False)  
 		self.PWM = GPIO.PWM(self.PIN,50)
@@ -76,10 +75,13 @@ class CONTROL:
 		"""
 		self.PWM.ChangeDutyCycle(self.NOMINAL)  
 		self.previous_dc = self.NOMINAL
+		print("reset")
 
 	def close(self):
 		"""
 		make sure to invoke this function 
 		to quit your program elegantly
 		"""
-		GPIO.cleanup()
+		self.reset()
+		sleep(1)
+		self.PWM.stop()

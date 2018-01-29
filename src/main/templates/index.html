@@ -46,6 +46,7 @@ var right_uc_right_fired = false;
 var right_uc_reset_fired = false;
 var right_distance_fired = false;
 var take_photo_fired = false;
+var obstacle_avoiding_fired = false;
 
 // set speed
 function set_speed() {
@@ -299,6 +300,23 @@ document.onkeydown  = function() {
             $.get("/right_distance")
           }
     }
+    //b
+    if(event.keyCode == 66) {
+      console.log(obstacle_avoiding_fired);
+          if(!obstacle_avoiding_fired){
+            obstacle_avoiding_fired = true;
+            button = document.getElementById('obstacle_avoiding');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('obstacle avoiding start');
+            $.get("/obstacle_avoiding_start")
+          }else{
+            obstacle_avoiding_fired = false;
+            button = document.getElementById('obstacle_avoiding');
+            button.className = 'btn btn-success btn-lg active';
+            console.log('obstacle avoiding stop');
+            $.get("/obstacle_avoiding_stop")
+          }
+    }
 
 };
  
@@ -547,6 +565,12 @@ document.onkeyup = function() {
         console.log('stop right ultrasonic detection');
       }
     }
+
+    //b
+    if(event.keyCode == 66) {
+        button = document.getElementById('obstacle_avoiding');
+        button.className = 'btn btn-default btn-lg active';
+    }
  
 
 };
@@ -659,6 +683,10 @@ document.onkeyup = function() {
       </button>
       <button id="right_distance" type="button" class="btn btn-default btn-lg active">
         <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+      </button>
+      <p>Obstacle avoiding mode</p>
+      <button id="obstacle_avoiding" type="button" class="btn btn-default btn-lg active">
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
       </button>
     </center>
  

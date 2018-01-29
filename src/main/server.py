@@ -3,6 +3,8 @@ from flask import request
 import motor
 import servo
 import ultrasonic
+import obstacle_avoidance
+
 
 
 app = Flask(__name__)
@@ -131,35 +133,62 @@ def right_distance():
     print("Right distance is %f cm" % right_ultrasonic.detect())
     return "OK"
 
+@app.route("/obstacle_avoiding_start")
+def obstacle_avoiding_start():
+    stop_instances()
+    # obstacle_avoidance.start()
+    return "OK"
+
+@app.route("/obstacle_avoiding_stop")
+def obstacle_avoiding_stop():
+    # obstacle_avoidance.stop()
+    start_instances()
+    return "OK"
+
+def start_instances():
+    motor_control.start()
+    back_ultrasonic.start()
+    right_ultrasonic.start()
+    left_ultrasonic.start()
+    right_servo.start()
+    camera_vertical_servo.start()
+    camera_horizontal_servo.start()
+    left_servo.start()
+    back_servo.start()
+    
+
+
+def stop_instances():
+    # make sure to close servos first
+    camera_vertical_servo.close()
+    camera_horizontal_servo.close()
+    back_servo.close()
+    left_servo.close()
+    right_servo.close()
+    right_ultrasonic.close()
+    motor_control.close()
+    back_ultrasonic.close()
+    left_ultrasonic.close()
+
 if __name__ == "__main__":
     try:
+        STRIDE=0.1
         motor_control = motor.CONTROL(RIGHT_FRONT_PIN=17, LEFT_FRONT_PIN=23, RIGHT_BACK_PIN=22, LEFT_BACK_PIN=24)
-
-        camera_vertical_servo = servo.CONTROL(PIN=26)
-        camera_horizontal_servo = servo.CONTROL(PIN=19)
-
-        back_servo = servo.CONTROL(PIN=18)
         back_ultrasonic = ultrasonic.CONTROL(TRIG = 6, ECHO = 13)
-
-        left_servo = servo.CONTROL(PIN=4)
+        right_ultrasonic = ultrasonic.CONTROL(TRIG = 5, ECHO = 21)
         left_ultrasonic = ultrasonic.CONTROL(TRIG = 25, ECHO = 20)
 
-        right_servo = servo.CONTROL(PIN=27)
-        right_ultrasonic = ultrasonic.CONTROL(TRIG = 5, ECHO = 21)
-
+        camera_vertical_servo = servo.CONTROL(PIN=26,STRIDE= STRIDE)
+        camera_horizontal_servo = servo.CONTROL(PIN=19,STRIDE= STRIDE)
+        back_servo = servo.CONTROL(PIN=18,STRIDE= STRIDE,RANGE=1.0)
+        left_servo = servo.CONTROL(PIN=4,STRIDE= STRIDE)
+        right_servo = servo.CONTROL(PIN=27,STRIDE= STRIDE)
+        
         app.run(host='0.0.0.0', port=2000, debug=False)
 
     finally:
         print("Clearing")
-        motor_control.close()
-        camera_vertical_servo.close()
-        camera_horizontal_servo.close()
-        back_servo.close()
-        back_ultrasonic.close()
-        left_servo.close()
-        left_ultrasonic.close()
-        right_servo.close()
-        right_ultrasonic.close()
+        stop_instances()
         print("Bye!")
 
     
