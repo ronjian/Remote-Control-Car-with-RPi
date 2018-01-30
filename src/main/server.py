@@ -4,6 +4,9 @@ import motor
 import servo
 import ultrasonic
 import obstacle_avoidance
+from time import sleep
+import threading
+from pathlib import Path
 
 
 
@@ -136,13 +139,21 @@ def right_distance():
 @app.route("/obstacle_avoiding_start")
 def obstacle_avoiding_start():
     stop_instances()
-    # obstacle_avoidance.start()
+    if oa_signal_path.exists(): oa_signal_path.unlink()
+    t = threading.Thread(target=obstacle_avoidance.start)
+    t.start()
+    print("thread kick off")
     return "OK"
 
 @app.route("/obstacle_avoiding_stop")
-def obstacle_avoiding_stop():
-    # obstacle_avoidance.stop()
-    start_instances()
+def obstacle_avoiding_stop(restart=True):
+    oa_signal_path.touch()
+    print("sent the stop signal")
+    if restart:
+        while oa_signal_path.exists():
+            sleep(1)
+        print("obstacle_avoiding stopped, restarting instances")
+        start_instances()
     return "OK"
 
 def start_instances():
@@ -183,6 +194,9 @@ if __name__ == "__main__":
         back_servo = servo.CONTROL(PIN=18,STRIDE= STRIDE,RANGE=1.0)
         left_servo = servo.CONTROL(PIN=4,STRIDE= STRIDE)
         right_servo = servo.CONTROL(PIN=27,STRIDE= STRIDE)
+
+        oa_signal_path = Path('assets/obstacle_avoidance_exit.signal')
+        
         
         app.run(host='0.0.0.0', port=2000, debug=False)
 

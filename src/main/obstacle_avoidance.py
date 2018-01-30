@@ -2,10 +2,11 @@ import motor
 import servo
 import ultrasonic
 from time import sleep
+from pathlib import Path
 
 def __uc_to( uc, pos):
 	uc.direct_move(pos)
-	sleep(0.25)
+	sleep(0.3)
 
 def __avg_distance(  ud):
 	record = []
@@ -53,6 +54,7 @@ def __uc_scan( uc, ud, front, side):
 	return min_dis , ref_pos
 
 def start():
+	oa_signal_path = Path('assets/obstacle_avoidance_exit.signal')
 	# kick off all instances
 	# motor control
 	mc = motor.CONTROL(RIGHT_FRONT_PIN=17, 
@@ -82,32 +84,36 @@ def start():
 		while True:
 			# seek path
 			if forward==False:
-				left_danger, left_ref_pos = __uc_scan(left_uc, left_ud, LEFT_FRONT_DC, LEFT_SIDE_DC)
-				print("left min distance is %f cm" % left_danger )
-				right_danger, right_ref_pos = __uc_scan(right_uc, right_ud, RIGHT_FRONT_DC, RIGHT_SIDE_DC)
-				print("right min distance is %f cm" % right_danger)
-				front_danger = __avg_distance(front_ud)
-				print("front danger is %f cm " % front_danger)
-				if right_danger > side_threshold and left_danger > side_threshold and front_danger>front_threshold:
-					print("Go!")
-					mc.forward(speed)
-					forward=True
+				# check exit signal
+				if oa_signal_path.exists():
+					break
 				else:
-					if left_danger < turn_threshold and turn_flag == "left" :
-						turn_flag = "right"
-					elif right_danger < turn_threshold and turn_flag == "right" :
-						turn_flag = "left"
-
-					if turn_flag == "left":
-						print("turn left")
-						mc.left(speed)
-						sleep(0.3)
-						mc.stop()
+					left_danger, left_ref_pos = __uc_scan(left_uc, left_ud, LEFT_FRONT_DC, LEFT_SIDE_DC)
+					print("left min distance is %f cm" % left_danger )
+					right_danger, right_ref_pos = __uc_scan(right_uc, right_ud, RIGHT_FRONT_DC, RIGHT_SIDE_DC)
+					print("right min distance is %f cm" % right_danger)
+					front_danger = __avg_distance(front_ud)
+					print("front danger is %f cm " % front_danger)
+					if right_danger > side_threshold and left_danger > side_threshold and front_danger>front_threshold:
+						print("Go!")
+						mc.forward(speed)
+						forward=True
 					else:
-						print("turn right")
-						mc.right(speed)
-						sleep(0.3)
-						mc.stop()
+						if left_danger < turn_threshold and turn_flag == "left" :
+							turn_flag = "right"
+						elif right_danger < turn_threshold and turn_flag == "right" :
+							turn_flag = "left"
+
+						if turn_flag == "left":
+							print("turn left")
+							mc.left(speed)
+							sleep(0.3)
+							mc.stop()
+						else:
+							print("turn right")
+							mc.right(speed)
+							sleep(0.3)
+							mc.stop()
 			# monitor danger
 			else:
 				left_danger = __avg_distance(left_ud)
@@ -118,22 +124,18 @@ def start():
 						mc.stop()
 						forward=False
 				sleep(0.01)
-	except KeyboardInterrupt:
-		print("Interrupting")
+	except Exception as e:
+		print(str(e))
 	finally:
 		# clear
-		mc.close()
-		print(1)
 		left_uc.close()
-		print(2)
 		right_uc.close()
-		print(3)
+		mc.close()
 		left_ud.close()
-		print(4)
 		right_ud.close()
-		print(5)
 		front_ud.close()
-		print("Clear complete. See you then:)")
+		if oa_signal_path.exists():oa_signal_path.unlink()
+		print("exit obstacle avoidance mode")
 
 if __name__ == "__main__":
 	start()

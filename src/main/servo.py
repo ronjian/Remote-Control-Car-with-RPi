@@ -75,7 +75,6 @@ class CONTROL:
 		"""
 		self.PWM.ChangeDutyCycle(self.NOMINAL)  
 		self.previous_dc = self.NOMINAL
-		print("reset")
 
 	def close(self):
 		"""

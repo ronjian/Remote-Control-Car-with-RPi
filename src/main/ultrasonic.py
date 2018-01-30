@@ -26,11 +26,11 @@ class CONTROL:
 			while GPIO.input(self.ECHO)==0:
 				pulse_start = time()
 				pulse_end = pulse_start
-				if pulse_start - start_time > 0.25: 
+				if pulse_start - start_time > 0.3: 
 					raise ValueError("Stuck in loop1, break, PIN is trigger:{} echo:{}".format(self.TRIG, self.ECHO))
 			while GPIO.input(self.ECHO)==1:
 				pulse_end = time()
-				if pulse_end - start_time > 0.25: 
+				if pulse_end - start_time > 0.3: 
 					raise ValueError("Stuck in loop2, break, PIN is trigger:{} echo:{}".format(self.TRIG, self.ECHO))
 			#calculation
 			pulse_duration = pulse_end - pulse_start
