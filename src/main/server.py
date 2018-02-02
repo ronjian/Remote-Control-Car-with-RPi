@@ -1,20 +1,31 @@
-from flask import Flask, render_template
-from flask import request
-import motor
-import servo
-import ultrasonic
+from flask import Flask, render_template, request, Response
+from pimodules import motor, servo, ultrasonic
 import obstacle_avoidance
 from time import sleep
 import threading
 from pathlib import Path
-
-
+from camera.camera_pi import Camera
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
     return render_template('index.html')
+
+def gen(camera):
+    """Video streaming generator function."""
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
+@app.route('/video_feed')
+def video_feed():
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @app.route("/forward")
 def forward():
@@ -167,8 +178,6 @@ def start_instances():
     left_servo.start()
     back_servo.start()
     
-
-
 def stop_instances():
     # make sure to close servos first
     camera_vertical_servo.close()
@@ -191,14 +200,13 @@ if __name__ == "__main__":
 
         camera_vertical_servo = servo.CONTROL(PIN=26,STRIDE= STRIDE)
         camera_horizontal_servo = servo.CONTROL(PIN=19,STRIDE= STRIDE)
-        back_servo = servo.CONTROL(PIN=18,STRIDE= STRIDE,RANGE=1.0)
+        back_servo = servo.CONTROL(PIN=18,STRIDE= STRIDE,RANGE=0.5)
         left_servo = servo.CONTROL(PIN=4,STRIDE= STRIDE)
         right_servo = servo.CONTROL(PIN=27,STRIDE= STRIDE)
 
         oa_signal_path = Path('assets/obstacle_avoidance_exit.signal')
         
-        
-        app.run(host='0.0.0.0', port=2000, debug=False)
+        app.run(host='0.0.0.0', port=2000, debug=False, threaded=True)
 
     finally:
         print("Clearing")

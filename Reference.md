@@ -45,10 +45,6 @@ except KeyboardInterrupt:
 p.stop()
 GPIO.cleanup()
 ```
-* I use sublime to sync codes on my laptop with PI
-    * https://www.youtube.com/watch?v=g6NqBGHFfm0
-* [Steps](StreamRPIcamera.md) to stream PI camera video to laptop browser.
-* [code sample](codes/basic_control.py) to control basic RC car (without speed control) by keyboard.
 * check [here](http://www.toptechboy.com/raspberry-pi/raspberry-pi-lesson-27-analog-voltages-using-gpio-pwm-in-python/)
 for PWM programming on RPi. [GPIO document](https://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/) here.
 [pigpio package](http://abyz.me.uk/rpi/pigpio/python.html) also implements controling PWM.
@@ -109,17 +105,6 @@ Demo<br>
 * http://nessy.info/?p=1136
 * http://vladikk.com/2013/09/12/serving-flask-with-nginx-on-ubuntu/  
 
-Munually start web server:  
-```shell
-# launch mjpg streamer
-cd ~/mjpg-streamer/mjpg-streamer/mjpg-streamer-experimental/
-nohup ./mjpg_streamer -o "output_http.so -w ./www" -i "input_raspicam.so -x 640 -y 480 -fps 20 -ex night -rot 180" &
-# launch nginx
-sudo /etc/init.d/nginx restart
-# launch main control server
-python3 ~/RC_car/src/main/server.py
-```  
-
 <h2 id="NRF24L01">NRF24L01</h2>
 
 * http://thezanshow.com/electronics-tutorials/raspberry-pi/tutorial-32-33  
@@ -160,3 +145,14 @@ http://blog.scphillips.com/posts/2013/01/sound-configuration-on-raspberry-pi-wit
 
 
 install espeak lib for python3 as ```sudo apt-get install espeak python-espeak```
+
+<h2 id='pi-shutdown-button'>Control Pi start, shutdown, reboot with one button</h2>
+
+- https://gilyes.com/pi-shutdown-button/
+- threaded callback function: https://sourceforge.net/p/raspberry-gpio-python/wiki/Inputs/
+
+<h2 id="camera">Camera</h2>
+
+- Amazing recipes for RPi camera: https://picamera.readthedocs.io/en/release-1.13/recipes1.html
+- Flask server solution to stream camera video: https://github.com/miguelgrinberg/flask-video-streaming
+

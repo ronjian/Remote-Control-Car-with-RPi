@@ -1,12 +1,6 @@
-import motor
-import servo
-import ultrasonic
+from pimodules import motor, servo, ultrasonic
 from time import sleep
 from pathlib import Path
-
-def __uc_to( uc, pos):
-	uc.direct_move(pos)
-	sleep(0.3)
 
 def __avg_distance(  ud):
 	record = []
@@ -17,11 +11,11 @@ def __avg_distance(  ud):
 	dis=record[1]
 	return dis
 
-def __tune_servo( uc):
+def tune_servo( uc):
 	front_done=False
 	front_pos = 0.0
 	while not front_done :
-		__uc_to(uc, front_pos)
+		uc.direct_move(front_pos,given_time = 1.0)
 		input_txt = input("now front position is %f, enter number to tune or enter to done: " % front_pos)
 		if input_txt == "": 
 			front_done = True
@@ -30,7 +24,7 @@ def __tune_servo( uc):
 	side_done=False
 	side_pos = 0.0
 	while not side_done :
-		__uc_to(uc, side_pos)
+		uc.direct_move(side_pos,given_time = 1.0)
 		input_txt = input("now side position is %f, enter number to tune or enter to done: " % side_pos)
 		if input_txt == "": 
 			side_done = True
@@ -45,12 +39,12 @@ def __uc_scan( uc, ud, front, side):
 	pos = front
 	while (front <= pos and pos <= side ) or (front >= pos and pos >= side ):
 		pos += step
-		__uc_to(uc, pos)
+		uc.direct_move(pos,given_time = 0.2)
 		dis = __avg_distance(ud)
 		if dis < min_dis:
 			min_dis = dis
 			ref_pos = pos
-	__uc_to(uc, ref_pos)
+	uc.direct_move(ref_pos,given_time = 0.2)
 	return min_dis , ref_pos
 
 def start():

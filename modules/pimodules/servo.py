@@ -45,7 +45,7 @@ class CONTROL:
 			self.previous_dc = dc
 
 
-	def direct_move(self, dc):
+	def direct_move(self, dc, given_time = 1.0):
 		"""
 		Cycle the servo directly to specific angle.
 		The servo works in async with this function.
@@ -56,6 +56,8 @@ class CONTROL:
 
 		:param dc: digital cycle, can be treat as postion 
 		of ther servo
+		:param given_time: give servo time to cycle 
+		to position
 
 		"""
 		if dc > self.MAX_DC:
@@ -65,7 +67,8 @@ class CONTROL:
 			print("WARNING!! {} is lower than the low limit {}".format(dc, self.MIN_DC))
 			dc = self.MIN_DC
 			
-		self.PWM.ChangeDutyCycle(dc)  
+		self.PWM.ChangeDutyCycle(dc)
+		if given_time > 0.0: sleep(given_time)
 		self.previous_dc = dc
 
 
@@ -73,14 +76,18 @@ class CONTROL:
 		"""
 		reset to initial angle
 		"""
-		self.PWM.ChangeDutyCycle(self.NOMINAL)  
-		self.previous_dc = self.NOMINAL
+		self.direct_move(self.NOMINAL)
 
-	def close(self):
+	def stop(self, reset=True):
 		"""
 		make sure to invoke this function 
 		to quit your program elegantly
 		"""
-		self.reset()
-		sleep(1)
+		if reset:
+			self.reset()
 		self.PWM.stop()
+
+	def close(self, reset=True):
+		self.stop(reset=reset)
+		GPIO.cleanup()
+

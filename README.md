@@ -29,23 +29,31 @@ Here are the components I prepared, most I bought on Taobao. Here I give Amazon 
 Please notes:  
 - I don't draw out the audio player, camera, which are easy to be plunge in by yourself.
 - I just draw out one servo and two ultra sonic sensor to keep the diagram clear.  
-- In realistic, I have a T-Type GPIO Adapter like below mapping the GPIO pins to the breadboard, so in the diagram, 
-I place a RPi header on the left side breadboard.
+- In realistic, I have a T-Type GPIO Adapter like below mapping the GPIO pins to the breadboard, so in the diagram, I place a RPi header on the left side breadboard.
+- [Here](./Reference.md#l298n) is more detail about L298N dirver.
+- [Here](./Reference.md#HC-SR04) is more detail about HC-SR04 ultrasonic sensor.
 
 <p align="center">
 <img src="assets/T-adaptor.png" width=400/><br>
 </p>
-
 
 I suggest checking [the sketch](#Fritzing_sketch.fzz) by [Fritzing](http://fritzing.org/home/) desktop.
 
 
 <h2 id='introduction'>Brief introduction</h2>
 
-
-
-<h2 id='reference'>Reference</h2>
-
-[Here](#Reference.md) is the reference resource I collected during the project.
-
-
+- install ```pimodules```
+```shell
+cd ./modules/
+python3 setup.py install
+# verify as
+python3 -c "import pimodules; print('import pimodules successfully')"
+```
+- Other python3 dependency: [flask](http://flask.pocoo.org/), [RPi.GPIO](https://sourceforge.net/p/raspberry-gpio-python/wiki/install/)
+- [Here](./Reference.md) is all the reference resources I collected during the project. Maybe you can find something I miss to mention here.
+- Start server:  
+```shell
+python3 ./src/main/server.py
+```
+- [This](./camera_streamer_manual.md) is a manual to setup mjpg steamer on RPi, which is another popular option to feed camera video. If you only want the streaming video on RPi.
+- I use sublime sftp tool to sync codes between my desktop and my RPi. [tutorial here](https://www.youtube.com/watch?v=g6NqBGHFfm0)
