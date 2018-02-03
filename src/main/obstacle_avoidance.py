@@ -1,4 +1,4 @@
-from pimodules import motor, servo, ultrasonic
+from pimodules import motor, servo_hw, ultrasonic
 from time import sleep
 from pathlib import Path
 
@@ -37,14 +37,15 @@ def __uc_scan( uc, ud, front, side):
 	min_dis = 400 # start at max limitation
 	step = (side - front) / 10.0
 	pos = front
+	uc.direct_move(pos,given_time = 0.3)
 	while (front <= pos and pos <= side ) or (front >= pos and pos >= side ):
 		pos += step
-		uc.direct_move(pos,given_time = 0.2)
+		uc.direct_move(pos,given_time = 0.1)
 		dis = __avg_distance(ud)
 		if dis < min_dis:
 			min_dis = dis
 			ref_pos = pos
-	uc.direct_move(ref_pos,given_time = 0.2)
+	uc.direct_move(ref_pos,given_time = 0.3)
 	return min_dis , ref_pos
 
 def start():
@@ -56,9 +57,9 @@ def start():
 						RIGHT_BACK_PIN=22, 
 						LEFT_BACK_PIN=24)
 	# left servo
-	left_uc = servo.CONTROL(PIN=4)
+	left_uc = servo_hw.CONTROL(PIN=4)
 	# right servo
-	right_uc = servo.CONTROL(PIN=27)
+	right_uc = servo_hw.CONTROL(PIN=27)
 	# left ultrasonic
 	left_ud = ultrasonic.CONTROL(TRIG = 25, ECHO = 20)
 	# right ultrasonic
@@ -66,8 +67,8 @@ def start():
 	# front ultrasonic
 	front_ud = ultrasonic.CONTROL(TRIG = 16, ECHO = 12)
 
-	LEFT_FRONT_DC, LEFT_SIDE_DC =   5.5, 11.0 # tune_servo(left_uc)
-	RIGHT_FRONT_DC, RIGHT_SIDE_DC =   10.0, 4.5 # tune_servo(right_uc)
+	LEFT_FRONT_DC, LEFT_SIDE_DC =  1250, 2200 # tune_servo(left_uc)
+	RIGHT_FRONT_DC, RIGHT_SIDE_DC = 1900, 900  # tune_servo(right_uc)
 	side_threshold=20 # cm
 	front_threshold=30 # cm
 	turn_threshold = 6 # cm

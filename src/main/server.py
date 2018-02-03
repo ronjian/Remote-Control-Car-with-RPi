@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, Response
-from pimodules import motor, servo, ultrasonic
+from pimodules import motor, servo_hw, ultrasonic
 import obstacle_avoidance
 from time import sleep
 import threading
@@ -19,13 +19,11 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 @app.route("/forward")
 def forward():
@@ -192,17 +190,17 @@ def stop_instances():
 
 if __name__ == "__main__":
     try:
-        STRIDE=0.1
+        STRIDE=0.05
         motor_control = motor.CONTROL(RIGHT_FRONT_PIN=17, LEFT_FRONT_PIN=23, RIGHT_BACK_PIN=22, LEFT_BACK_PIN=24)
         back_ultrasonic = ultrasonic.CONTROL(TRIG = 6, ECHO = 13)
         right_ultrasonic = ultrasonic.CONTROL(TRIG = 5, ECHO = 21)
         left_ultrasonic = ultrasonic.CONTROL(TRIG = 25, ECHO = 20)
 
-        camera_vertical_servo = servo.CONTROL(PIN=26,STRIDE= STRIDE)
-        camera_horizontal_servo = servo.CONTROL(PIN=19,STRIDE= STRIDE)
-        back_servo = servo.CONTROL(PIN=18,STRIDE= STRIDE,RANGE=0.5)
-        left_servo = servo.CONTROL(PIN=4,STRIDE= STRIDE)
-        right_servo = servo.CONTROL(PIN=27,STRIDE= STRIDE)
+        camera_vertical_servo = servo_hw.CONTROL(PIN=26,STRIDE= STRIDE)
+        camera_horizontal_servo = servo_hw.CONTROL(PIN=19,STRIDE= STRIDE)
+        back_servo = servo_hw.CONTROL(PIN=18,STRIDE= STRIDE,RANGE=100)
+        left_servo = servo_hw.CONTROL(PIN=4,STRIDE= STRIDE)
+        right_servo = servo_hw.CONTROL(PIN=27,STRIDE= STRIDE)
 
         oa_signal_path = Path('assets/obstacle_avoidance_exit.signal')
         

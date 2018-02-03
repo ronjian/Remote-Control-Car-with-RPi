@@ -134,7 +134,24 @@ https://www.youtube.com/watch?v=GiXNUYPrQ7I
 
 <h2 id='speaking'>Make RPi speak</h2>
 
-For my RPi, set ```audio_pwm_mode=2``` in ```/boot/config.txt``` can reduce the background noise for audio from 3.5mm jack.
+Setting ```audio_pwm_mode=2``` in ```/boot/config.txt``` can reduce the background noise for audio from 3.5mm jack.
+
+If you want to set usb sound card for RPi3 as default sound output.  
+- check the device number by ```aplay -l```  
+- add below lines to ```/etc/asound.conf```   
+```
+pcm.!default {
+    type hw
+    card 1
+}
+
+ctl.!default {
+    type hw           
+    card 1
+}```
+- verify as:  
+```aplay -D plughw:1,0  /usr/share/sounds/alsa/*```
+```omxplayer -b -o alsa:hw:1,0  xxx.mp3```
 
 Install ```espeak``` on RPi, refer to:  
 - https://www.dexterindustries.com/howto/make-your-raspberry-pi-speak/

@@ -33,11 +33,11 @@ Please notes:
 - [Here](./Reference.md#l298n) is more detail about L298N dirver.
 - [Here](./Reference.md#HC-SR04) is more detail about HC-SR04 ultrasonic sensor.
 
-<p align="center">
-<img src="assets/T-adaptor.png" width=400/><br>
+<p align="left">
+<img src="assets/T-adaptor.png" width=200/><br>
 </p>
 
-I suggest checking [the sketch](#Fritzing_sketch.fzz) by [Fritzing](http://fritzing.org/home/) desktop.
+I suggest checking the _Fritzing_sketch.fzz_ by [Fritzing](http://fritzing.org/home/) app.
 
 
 <h2 id='introduction'>Brief introduction</h2>
@@ -49,7 +49,7 @@ python3 setup.py install
 # verify as
 python3 -c "import pimodules; print('import pimodules successfully')"
 ```
-- Other python3 dependency: [flask](http://flask.pocoo.org/), [RPi.GPIO](https://sourceforge.net/p/raspberry-gpio-python/wiki/install/)
+- Other python3 dependency: [flask](http://flask.pocoo.org/), [RPi.GPIO](https://sourceforge.net/p/raspberry-gpio-python/wiki/install/), [pigpio](http://abyz.me.uk/rpi/pigpio/index.html)
 - [Here](./Reference.md) is all the reference resources I collected during the project. Maybe you can find something I miss to mention here.
 - Start server:  
 ```shell

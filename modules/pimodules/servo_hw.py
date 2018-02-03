@@ -1,16 +1,17 @@
-import RPi.GPIO as GPIO  
 from time import sleep
+import pigpio
+from os import system
 
 class CONTROL:
 	"""
-	This module abstract the action of a typical servo: 
+	This module abstract the action of a typical servo by hardware PWM: 
 	1. little step cycle in two opposite direction choices
 	2. direct cycle to specific angle
 	3. reset to initial angle
 
 	Be careful to set the range to protest your servo.
 	"""
-	def __init__(self, PIN, STRIDE= 0.01, NOMINAL=7.5, RANGE=3.9):
+	def __init__(self, PIN, STRIDE= 0.01, NOMINAL=1500, RANGE=1000):
 		self.STRIDE= STRIDE # step magnitude
 		self.NOMINAL= NOMINAL  # initial digital cycle/angle
 		self.RANGE = RANGE  # range limitation
@@ -21,10 +22,16 @@ class CONTROL:
 		self.start()
 
 	def start(self):
-		GPIO.setmode(GPIO.BCM)
-		GPIO.setup(self.PIN, GPIO.OUT, initial=False)  
-		self.PWM = GPIO.PWM(self.PIN,50)
-		self.PWM.start(self.NOMINAL)
+		self.pi = pigpio.pi()
+		if not self.pi.connected:
+			print("starting pigpiod")
+			res = system("sudo pigpiod")
+			sleep(3)
+			if res != 0 :
+				print("can't start pigpiod")
+				exit()
+			self.pi = pigpio.pi()
+		self.pi.set_servo_pulsewidth(self.PIN, self.NOMINAL)
 		# give time to cycle
 		sleep(1)
 
@@ -41,7 +48,7 @@ class CONTROL:
 		if dc > self.MAX_DC or dc < self.MIN_DC:
 			print("WARNING!! The servo reached the limit.")
 		else:
-			self.PWM.ChangeDutyCycle(dc)  
+			self.pi.set_servo_pulsewidth(self.PIN, dc)  
 			self.previous_dc = dc
 
 
@@ -67,7 +74,7 @@ class CONTROL:
 			print("WARNING!! {} is lower than the low limit {}".format(dc, self.MIN_DC))
 			dc = self.MIN_DC
 			
-		self.PWM.ChangeDutyCycle(dc)
+		self.pi.set_servo_pulsewidth(self.PIN, dc)
 		if given_time > 0.0: sleep(given_time)
 		self.previous_dc = dc
 
@@ -85,9 +92,9 @@ class CONTROL:
 		"""
 		if reset:
 			self.reset()
-		self.PWM.stop()
+		self.pi.set_servo_pulsewidth(self.PIN, 0)
 
 	def close(self, reset=True):
 		self.stop(reset=reset)
-		GPIO.cleanup()
+		self.pi.stop()
 
