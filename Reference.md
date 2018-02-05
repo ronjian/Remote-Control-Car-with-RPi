@@ -148,20 +148,25 @@ pcm.!default {
 ctl.!default {
     type hw           
     card 1
-}```
-- verify as:  
+}
+```
+
+- verify as:
+
 ```aplay -D plughw:1,0  /usr/share/sounds/alsa/*```
+
 ```omxplayer -b -o alsa:hw:1,0  xxx.mp3```
 
-Install ```espeak``` on RPi, refer to:  
+Install ```espeak``` on RPi, refer to: 
+
 - https://www.dexterindustries.com/howto/make-your-raspberry-pi-speak/
 - https://www.devdungeon.com/content/text-speech-python-espeak
 
-volumn control:  
+- volumn control:  
 http://blog.scphillips.com/posts/2013/01/sound-configuration-on-raspberry-pi-with-alsa/
 
-
-install espeak lib for python3 as ```sudo apt-get install espeak python-espeak```
+- Install espeak lib for python3 as 
+```sudo apt-get install espeak python-espeak```
 
 <h2 id='pi-shutdown-button'>Control Pi start, shutdown, reboot with one button</h2>
 

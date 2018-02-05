@@ -202,7 +202,7 @@ if __name__ == "__main__":
         left_servo = servo_hw.CONTROL(PIN=4,STRIDE= STRIDE)
         right_servo = servo_hw.CONTROL(PIN=27,STRIDE= STRIDE)
 
-        oa_signal_path = Path('assets/obstacle_avoidance_exit.signal')
+        oa_signal_path = Path('data/obstacle_avoidance_exit.signal')
         
         app.run(host='0.0.0.0', port=2000, debug=False, threaded=True)
 

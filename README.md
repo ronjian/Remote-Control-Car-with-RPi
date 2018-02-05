@@ -39,21 +39,14 @@ Please notes:
 
 I suggest checking the _Fritzing_sketch.fzz_ by [Fritzing](http://fritzing.org/home/) app.
 
-
 <h2 id='introduction'>Brief introduction</h2>
+This project is built on python3.  
 
-- install ```pimodules```
-```shell
-cd ./modules/
-python3 setup.py install
-# verify as
-python3 -c "import pimodules; print('import pimodules successfully')"
-```
-- Other python3 dependency: [flask](http://flask.pocoo.org/), [RPi.GPIO](https://sourceforge.net/p/raspberry-gpio-python/wiki/install/), [pigpio](http://abyz.me.uk/rpi/pigpio/index.html)
+- dependencies: [flask](http://flask.pocoo.org/), [RPi.GPIO](https://sourceforge.net/p/raspberry-gpio-python/wiki/install/), [pigpio](http://abyz.me.uk/rpi/pigpio/index.html), [picamera](https://picamera.readthedocs.io/en/release-1.13/) [pimodules](https://github.com/ronjian/pimodules)
 - [Here](./Reference.md) is all the reference resources I collected during the project. Maybe you can find something I miss to mention here.
-- Start server:  
+- Start server, then check ```http://192.168.1.110:2000/```(replace IP address with yours) in your browser:  
 ```shell
 python3 ./src/main/server.py
 ```
 - [This](./camera_streamer_manual.md) is a manual to setup mjpg steamer on RPi, which is another popular option to feed camera video. If you only want the streaming video on RPi.
-- I use sublime sftp tool to sync codes between my desktop and my RPi. [tutorial here](https://www.youtube.com/watch?v=g6NqBGHFfm0)
+- I use sublime sftp tool to sync codes between my laptop and Pi. [tutorial here](https://www.youtube.com/watch?v=g6NqBGHFfm0)

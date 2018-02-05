@@ -6,7 +6,7 @@ def __avg_distance(  ud):
 	record = []
 	for i in range(3):
 		record.append(ud.detect())
-		sleep(0.01)
+		sleep(0.03)
 	record.sort()
 	dis=record[1]
 	return dis
@@ -40,7 +40,7 @@ def __uc_scan( uc, ud, front, side):
 	uc.direct_move(pos,given_time = 0.3)
 	while (front <= pos and pos <= side ) or (front >= pos and pos >= side ):
 		pos += step
-		uc.direct_move(pos,given_time = 0.1)
+		uc.direct_move(pos,given_time = 0.15)
 		dis = __avg_distance(ud)
 		if dis < min_dis:
 			min_dis = dis
@@ -49,7 +49,7 @@ def __uc_scan( uc, ud, front, side):
 	return min_dis , ref_pos
 
 def start():
-	oa_signal_path = Path('assets/obstacle_avoidance_exit.signal')
+	oa_signal_path = Path('data/obstacle_avoidance_exit.signal')
 	# kick off all instances
 	# motor control
 	mc = motor.CONTROL(RIGHT_FRONT_PIN=17, 
@@ -69,10 +69,10 @@ def start():
 
 	LEFT_FRONT_DC, LEFT_SIDE_DC =  1250, 2200 # tune_servo(left_uc)
 	RIGHT_FRONT_DC, RIGHT_SIDE_DC = 1900, 900  # tune_servo(right_uc)
-	side_threshold=20 # cm
-	front_threshold=30 # cm
+	side_threshold=15 # cm
+	front_threshold=25 # cm
 	turn_threshold = 6 # cm
-	speed = 60
+	speed = 50
 	try:
 		forward=False
 		turn_flag="left"
