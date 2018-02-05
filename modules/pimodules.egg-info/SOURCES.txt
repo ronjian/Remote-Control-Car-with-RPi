@@ -1,9 +1,0 @@
-setup.py
-pimodules/__init__.py
-pimodules/motor.py
-pimodules/servo.py
-pimodules/ultrasonic.py
-pimodules.egg-info/PKG-INFO
-pimodules.egg-info/SOURCES.txt
-pimodules.egg-info/dependency_links.txt
-pimodules.egg-info/top_level.txt
