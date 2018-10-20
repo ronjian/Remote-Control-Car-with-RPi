@@ -1,12 +1,15 @@
-from pimodules import motor, servo_hw, ultrasonic
+from pimodules import motor, servo_hw
 from time import sleep
 from pathlib import Path
+import pigpio
+import ultrasonic_pigpio_left as left
+import ultrasonic_pigpio_right as right
+import ultrasonic_pigpio_front as front
 
-def __avg_distance(  ud):
+def __avg_distance(obj):
 	record = []
 	for i in range(3):
-		record.append(ud.detect())
-		sleep(0.03)
+		record.append(obj.readDistance())
 	record.sort()
 	dis=record[1]
 	return dis
@@ -32,7 +35,7 @@ def tune_servo( uc):
 			side_pos = float(input_txt)
 	return front_pos, side_pos
 
-def __uc_scan( uc, ud, front, side):
+def __uc_scan( uc, obj, front, side):
 	# from front to side
 	min_dis = 400 # start at max limitation
 	step = (side - front) / 10.0
@@ -41,7 +44,7 @@ def __uc_scan( uc, ud, front, side):
 	while (front <= pos and pos <= side ) or (front >= pos and pos >= side ):
 		pos += step
 		uc.direct_move(pos,given_time = 0.15)
-		dis = __avg_distance(ud)
+		dis = __avg_distance(obj)
 		if dis < min_dis:
 			min_dis = dis
 			ref_pos = pos
@@ -60,12 +63,18 @@ def start():
 	left_uc = servo_hw.CONTROL(PIN=4)
 	# right servo
 	right_uc = servo_hw.CONTROL(PIN=27)
-	# left ultrasonic
-	left_ud = ultrasonic.CONTROL(TRIG = 25, ECHO = 20)
-	# right ultrasonic
-	right_ud = ultrasonic.CONTROL(TRIG = 5, ECHO = 21)
-	# front ultrasonic
-	front_ud = ultrasonic.CONTROL(TRIG = 16, ECHO = 12)
+	# # left ultrasonic
+	# left_ud = ultrasonic.CONTROL(TRIG = 25, ECHO = 20)
+	# # right ultrasonic
+	# right_ud = ultrasonic.CONTROL(TRIG = 5, ECHO = 21)
+	# # front ultrasonic
+	# front_ud = ultrasonic.CONTROL(TRIG = 16, ECHO = 12)
+	# left_echo1 = pi.callback(20, pigpio.RISING_EDGE,  _echo1)
+	# left_echo0 = pi.callback(20, pigpio.FALLING_EDGE, _echo0)
+	# right_echo1 = pi.callback(21, pigpio.RISING_EDGE,  _echo1)
+	# right_echo0 = pi.callback(21, pigpio.FALLING_EDGE, _echo0)
+	# front_echo1 = pi.callback(12, pigpio.RISING_EDGE,  _echo1)
+	# front_echo0 = pi.callback(12, pigpio.FALLING_EDGE, _echo0)
 
 	LEFT_FRONT_DC, LEFT_SIDE_DC =  1250, 2200 # tune_servo(left_uc)
 	RIGHT_FRONT_DC, RIGHT_SIDE_DC = 1900, 900  # tune_servo(right_uc)
@@ -83,11 +92,12 @@ def start():
 				if oa_signal_path.exists():
 					break
 				else:
-					left_danger, left_ref_pos = __uc_scan(left_uc, left_ud, LEFT_FRONT_DC, LEFT_SIDE_DC)
-					print("left min distance is %f cm" % left_danger )
-					right_danger, right_ref_pos = __uc_scan(right_uc, right_ud, RIGHT_FRONT_DC, RIGHT_SIDE_DC)
+					right_danger, right_ref_pos = __uc_scan(right_uc, right, RIGHT_FRONT_DC, RIGHT_SIDE_DC)
 					print("right min distance is %f cm" % right_danger)
-					front_danger = __avg_distance(front_ud)
+					left_danger, left_ref_pos = __uc_scan(left_uc, left, LEFT_FRONT_DC, LEFT_SIDE_DC)
+					print("left min distance is %f cm" % left_danger )
+
+					front_danger = __avg_distance(front)
 					print("front danger is %f cm " % front_danger)
 					if right_danger > side_threshold and left_danger > side_threshold and front_danger>front_threshold:
 						print("Go!")
@@ -111,9 +121,9 @@ def start():
 							mc.stop()
 			# monitor danger
 			else:
-				left_danger = __avg_distance(left_ud)
-				right_danger = __avg_distance(right_ud)
-				front_danger = __avg_distance(front_ud)
+				left_danger = __avg_distance(left)
+				right_danger = __avg_distance(right)
+				front_danger = __avg_distance(front)
 				if left_danger < side_threshold or right_danger < side_threshold or front_danger < front_threshold:
 						print("Stop!")
 						mc.stop()
@@ -126,9 +136,9 @@ def start():
 		left_uc.close()
 		right_uc.close()
 		mc.close()
-		left_ud.close()
-		right_ud.close()
-		front_ud.close()
+		# left_ud.close()
+		# right_ud.close()
+		# front_ud.close()
 		if oa_signal_path.exists():oa_signal_path.unlink()
 		print("exit obstacle avoidance mode")
 

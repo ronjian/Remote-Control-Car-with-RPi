@@ -178,3 +178,10 @@ http://blog.scphillips.com/posts/2013/01/sound-configuration-on-raspberry-pi-wit
 - Amazing recipes for RPi camera: https://picamera.readthedocs.io/en/release-1.13/recipes1.html
 - Flask server solution to stream camera video: https://github.com/miguelgrinberg/flask-video-streaming
 
+
+
+<h2 id='KY-022'>KY-022(IR sensor)</h2>
+
+reference:  
+- wire connection: http://sensorkit.en.joy-it.net/index.php?title=KY-022_Infrared_receiver_module#Code_example_Raspberry_Pi
+- IR receiver code in python: http://abyz.me.uk/rpi/pigpio/examples.html#Python%20code (see "IR Receiver")
